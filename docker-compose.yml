@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+    nginx:
+        image: nginx:latest
+        volumes:
+            - ./:/var/www
+            - ./_docker/nginx/conf.d:/etc/nginx/conf.d
+        ports:
+            - "8876:80"
+        depends_on:
+            - app
+        container_name: karte_nginx
+
+    app:
+        build:
+            context: .
+            dockerfile: _docker/app/Dockerfile
+        volumes:
+            - ./:/var/www
+        container_name: karte_app
+
+    db:
+        image: mysql:latest
+        restart: always
+        volumes:
+            - ./tmp/db:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: karte_db
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "8106:3306"
+        command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+        container_name: karte_db
+
+    db_test:
+        image: mysql:latest
+        restart: always
+        volumes:
+            -   ./tmp/db_test:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: db_test
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "8108:3306"
+        command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+        container_name: db_test
