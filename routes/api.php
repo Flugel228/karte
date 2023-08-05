@@ -14,14 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['namespace' => 'App\Http\Controllers\API',], function () {
-    Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
-        Route::resource('users', 'UserController', [
-            'only' => [
-                'store',
-                'update',
-                'destroy',
-            ],
-        ]);
-    });
-});
+
