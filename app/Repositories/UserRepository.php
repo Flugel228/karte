@@ -30,6 +30,15 @@ class UserRepository extends CoreRepository implements UserRepositoryContract
     }
 
     /**
+     * @param string $email
+     * @return Model|null
+     */
+    public function findByEmail(string $email): Model|null
+    {
+        return $this->startConditions()->where('email', '=', $email)->first();
+    }
+
+    /**
      * @param array $data
      * @return Model
      */
@@ -41,11 +50,11 @@ class UserRepository extends CoreRepository implements UserRepositoryContract
     /**
      * @param int $id
      * @param array $data
-     * @return Model
+     * @return bool
      */
-    public function update(int $id, array $data): Model
+    public function update(int $id, array $data): bool
     {
-        return $this->startConditions()->find($id)->fill($data)->save();
+        return $this->startConditions()->find($id)->update($data);
     }
 
     /**

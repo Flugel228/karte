@@ -22,9 +22,9 @@ interface UserServiceContract
     /**
      * @param int $id
      * @param array $data
-     * @return void
+     * @return ?string
      */
-    public function update(int $id, array $data): void;
+    public function update(int $id, array $data): ?string;
 
     /**
      * @param int $id
