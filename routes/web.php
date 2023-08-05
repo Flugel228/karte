@@ -16,14 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'App\Http\Controllers\Client',], function () {
     Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::get('/', 'HomeController');
-
-        Route::resource('/users', 'UserController', [
-            'only' => [
-                'index',
-                'create',
-                'show',
-                'edit',
-            ],
-        ]);
+        Route::resource('/users', 'UserController');
+        Route::resource('/categories', 'CategoryController');
     });
 });
