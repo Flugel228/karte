@@ -3,7 +3,6 @@
 namespace App\Http\Requests\API\Admin\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class UpdateRequest extends FormRequest
 {

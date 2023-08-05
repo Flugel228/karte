@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\API\Admin\Category;
+namespace App\Http\Requests\API\Admin\Color;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:categories',
+            'title' => 'required|string|max:255|unique:colors',
+            'code' => 'required|string|unique:colors',
         ];
     }
 }
