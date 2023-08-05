@@ -37,7 +37,10 @@ class UserController extends BaseController
     public function update(UpdateRequest $request, User $user): RedirectResponse
     {
         $data = $request->validated();
-        $this->service->update($user->id, $data);
+        $response = $this->service->update($user->id, $data);
+        if ($response === 'email') {
+            return redirect()->back()->withErrors(['email' => 'Аккаунт с таким адресом уже существует.']);
+        }
         return redirect()->route('users.index');
     }
 

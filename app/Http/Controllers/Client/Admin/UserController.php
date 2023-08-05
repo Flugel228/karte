@@ -42,13 +42,25 @@ class UserController extends BaseController
         return view('admin.user.create', compact('roles', 'genders'));
     }
 
-    public function show()
+    /**
+     * @param User $user
+     * @return View|\Illuminate\Foundation\Application|Factory|Application
+     */
+    public function show(User $user): View|\Illuminate\Foundation\Application|Factory|Application
     {
-
+        $roles = User::getRoles();
+        $genders = User::getGenders();
+        return view('admin.user.show', compact('user', 'roles', 'genders'));
     }
 
-    public function edit()
+    /**
+     * @param User $user
+     * @return View|\Illuminate\Foundation\Application|Factory|Application
+     */
+    public function edit(User $user): View|\Illuminate\Foundation\Application|Factory|Application
     {
-
+        $roles = User::getRoles();
+        $genders = User::getGenders();
+        return view('admin.user.edit', compact('user', 'roles', 'genders'));
     }
 }

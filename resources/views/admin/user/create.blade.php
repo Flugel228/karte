@@ -10,6 +10,7 @@
     <div class="pt-2 pb-3">
         <h4>Форма добавления пользователя</h4>
         <form action="{{ route('users.store') }}" method="post">
+            @csrf
             <div class="w-35">
                 <x-adminlte-input name="first_name" label="Имя" placeholder="Введите имя"
                                   fgroup-class="col-md-6" disable-feedback/>
@@ -86,3 +87,4 @@
         </form>
     </div>
 @endsection
+
