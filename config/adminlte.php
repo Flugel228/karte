@@ -312,6 +312,11 @@ return [
             'url'  => 'admin/users',
             'icon' => 'fas fa-fw fa-user',
         ],
+        [
+            'text' => 'Категории',
+            'url'  => 'admin/categories',
+            'icon' => 'fas fa-fw fa-th-list',
+        ],
         /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',

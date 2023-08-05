@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
-@section('title', 'Админ-панель: Список пользователей')
+@section('title', "Админ-панель: Пользователь $user->first_name $user->last_name")
 
 @section('content_header')
-    <h1>Админ-панель: Список пользователей</h1>
+    <h1>Админ-панель: Список пользователей {{ "$user->first_name $user->last_name" }}</h1>
 @endsection
 
 @section('content')
