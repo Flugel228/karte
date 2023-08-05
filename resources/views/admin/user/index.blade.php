@@ -49,6 +49,6 @@
         @endforeach
     </x-adminlte-datatable>
     <div>
-        {{ $users->links() }}
+        {{ $users->onEachSide(2)->links() }}
     </div>
 @endsection

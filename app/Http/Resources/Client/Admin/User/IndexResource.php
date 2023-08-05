@@ -17,8 +17,8 @@ class IndexResource extends JsonResource
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'created_at' => $this->createdAsCarbon,
-            'updated_at' => $this->updatedAsCarbon,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

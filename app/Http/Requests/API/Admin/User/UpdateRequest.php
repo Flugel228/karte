@@ -29,7 +29,7 @@ class UpdateRequest extends FormRequest
             'gender' => 'integer',
             'address' => 'string',
             'telephone' => 'string',
-            'email' => 'string|email:rfc|unique:users',
+            'email' => 'string|email:rfc',
             'password' => ['string', Password::min(8)->mixedCase()->numbers()],
         ];
     }

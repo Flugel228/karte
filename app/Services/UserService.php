@@ -40,11 +40,16 @@ class UserService extends CoreService implements UserServiceContract
     /**
      * @param int $id
      * @param array $data
-     * @return void
+     * @return string|null
      */
-    public function update(int $id, array $data): void
+    public function update(int $id, array $data): ?string
     {
-        $this->repository->update($id, $data);
+        $user = $this->repository->findByEmail($data['email']);
+        if ($user === null or $user->id === $id) {
+            $this->repository->update($id, $data);
+            return null;
+        }
+        return 'email';
     }
 
     /**

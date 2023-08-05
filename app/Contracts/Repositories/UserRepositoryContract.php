@@ -3,7 +3,6 @@
 namespace App\Contracts\Repositories;
 
 use App\Models\User as Model;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserRepositoryContract
@@ -16,6 +15,12 @@ interface UserRepositoryContract
     public function paginate(int $quantity): LengthAwarePaginator;
 
     /**
+     * @param string $email
+     * @return Model|null
+     */
+    public function findByEmail(string $email): Model|null;
+
+    /**
      * @param array $data
      * @return Model
      */
@@ -24,9 +29,9 @@ interface UserRepositoryContract
     /**
      * @param int $id
      * @param array $data
-     * @return Model
+     * @return bool
      */
-    public function update(int $id, array $data): Model;
+    public function update(int $id, array $data): bool;
 
     /**
      * @param int $id
