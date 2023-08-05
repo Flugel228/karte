@@ -317,6 +317,11 @@ return [
             'url'  => 'admin/categories',
             'icon' => 'fas fa-fw fa-th-list',
         ],
+        [
+            'text' => 'Цвета',
+            'url'  => 'admin/colors',
+            'icon' => 'fas fa-fw fa-palette',
+        ],
         /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Color>
  */
-class CategoryFactory extends Factory
+class ColorFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => ucfirst(fake()->unique()->word()),
+            'title' => fake()->unique()->colorName(),
+            'code' => fake()->unique()->hexColor(),
         ];
     }
 }

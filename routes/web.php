@@ -18,5 +18,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Client',], function () {
         Route::get('/', 'HomeController');
         Route::resource('/users', 'UserController');
         Route::resource('/categories', 'CategoryController');
+        Route::resource('/colors', 'ColorController');
     });
 });
