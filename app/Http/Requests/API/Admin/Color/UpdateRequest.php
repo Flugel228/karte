@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API\Admin\Category;
+namespace App\Http\Requests\API\Admin\Color;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:categories',
+            'title' => 'string|max:255',
+            'code' => 'string',
         ];
     }
 }
