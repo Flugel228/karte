@@ -310,7 +310,7 @@ return [
         [
             'text' => 'Пользователи',
             'url'  => 'admin/users',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-users',
         ],
         [
             'text' => 'Категории',
@@ -321,6 +321,11 @@ return [
             'text' => 'Цвета',
             'url'  => 'admin/colors',
             'icon' => 'fas fa-fw fa-palette',
+        ],
+        [
+            'text' => 'Теги',
+            'url'  => 'admin/tags',
+            'icon' => 'fas fa-fw fa-tags',
         ],
         /*[
             'text'    => 'multilevel',
