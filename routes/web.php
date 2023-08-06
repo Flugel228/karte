@@ -19,5 +19,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Client',], function () {
         Route::resource('/users', 'UserController');
         Route::resource('/categories', 'CategoryController');
         Route::resource('/colors', 'ColorController');
+        Route::resource('/tags', 'TagController');
     });
 });
