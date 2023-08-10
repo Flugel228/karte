@@ -29,7 +29,9 @@ class UserController extends BaseController
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $quantity = 10;
-        $users = $this->service->paginate($quantity);
+        $page = (int)request()->query('page', 1);
+        $path = request()->getPathInfo();
+        $users = $this->service->paginate($quantity, $page, $path);
         return view('admin.user.index', compact('users'));
     }
 
@@ -46,13 +48,17 @@ class UserController extends BaseController
     }
 
     /**
-     * @param User $user
+     * @param int $id
      * @return View|\Illuminate\Foundation\Application|Factory|Application
      */
-    public function show(User $user): View|\Illuminate\Foundation\Application|Factory|Application
+    public function show(int $id): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $roles = User::getRoles();
         $genders = User::getGenders();
+        $user = $this->service->findById($id);
+        if ($user === null) {
+            abort(404);
+        }
         return view('admin.user.show', compact('user', 'roles', 'genders'));
     }
 

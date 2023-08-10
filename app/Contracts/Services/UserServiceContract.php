@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Services;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 interface UserServiceContract
@@ -9,9 +10,17 @@ interface UserServiceContract
 
     /**
      * @param int $quantity
+     * @param int $page
+     * @param string $path
      * @return AnonymousResourceCollection
      */
-    public function paginate(int $quantity): \Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+    public function paginate(int $quantity, int $page, string $path): AnonymousResourceCollection;
+
+    /**
+     * @param int $id
+     * @return Model|null
+     */
+    public function findById(int $id): Model|null;
 
     /**
      * @param array $data

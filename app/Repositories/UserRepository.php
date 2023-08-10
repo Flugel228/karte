@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\Repositories\UserRepositoryContract;
 use App\Models\User as Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 
@@ -12,7 +13,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  *
  * @package App\Repositories
  */
-class UserRepository extends CoreRepository implements UserRepositoryContract
+class UserRepository extends CoreRepository implements UserRepositoryContract, CountableRepository
 {
 
     protected function getModelClass(): string
@@ -22,11 +23,22 @@ class UserRepository extends CoreRepository implements UserRepositoryContract
 
     /**
      * @param int $quantity
+     * @param int $page
      * @return LengthAwarePaginator
      */
-    public function paginate(int $quantity): LengthAwarePaginator
+    public function paginate(int $quantity, int $page): LengthAwarePaginator
     {
-        return $this->startConditions()->paginate($quantity);
+
+        return $this->startConditions()->paginate($quantity, ['*'], 'page', $page);
+    }
+
+    /**
+     * @param int $id
+     * @return Model|null
+     */
+    public function findById(int $id): Model|null
+    {
+        return $this->startConditions()->find($id);
     }
 
     /**
@@ -65,4 +77,15 @@ class UserRepository extends CoreRepository implements UserRepositoryContract
     {
         $this->startConditions()->find($id)->delete();
     }
+
+    public function count(): int
+    {
+        return $this->startConditions()->all()->count();
+    }
+
+    public function getAll(): Collection
+    {
+        return $this->startConditions()->all();
+    }
+
 }

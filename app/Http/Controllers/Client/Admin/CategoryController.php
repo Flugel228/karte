@@ -29,7 +29,9 @@ class CategoryController extends BaseController
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $quantity = 10;
-        $categories = $this->service->paginate($quantity);
+        $page = (int)request()->query('page', 1);
+        $path = request()->getPathInfo();
+        $categories = $this->service->paginate($quantity, $page, $path);
         return view('admin.category.index', compact('categories'));
     }
 
@@ -44,11 +46,15 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @param Category $category
+     * @param int $id
      * @return View|\Illuminate\Foundation\Application|Factory|Application
      */
-    public function show(Category $category): View|\Illuminate\Foundation\Application|Factory|Application
+    public function show(int $id): View|\Illuminate\Foundation\Application|Factory|Application
     {
+        $category = $this->service->findById($id);
+        if ($category === null) {
+            abort(404);
+        }
         return view('admin.category.show', compact('category'));
     }
 
