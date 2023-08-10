@@ -3,16 +3,29 @@
 namespace App\Contracts\Repositories;
 
 use App\Models\Color as Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface ColorRepositoryContract
 {
 
     /**
+     * @return Collection
+     */
+    public function getAll(): Collection;
+
+    /**
      * @param int $quantity
+     * @param int $page
      * @return LengthAwarePaginator
      */
-    public function paginate(int $quantity): LengthAwarePaginator;
+    public function paginate(int $quantity, int $page): LengthAwarePaginator;
+
+    /**
+     * @param int $id
+     * @return Model|null
+     */
+    public function findById(int $id): Model|null;
 
     /**
      * @param string $title

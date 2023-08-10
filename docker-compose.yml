@@ -45,3 +45,16 @@ services:
             - "8108:3306"
         command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
         container_name: db_test
+
+    redis:
+        image: redis:alpine
+        restart: always
+        environment:
+            REDIS_USERNAME: admin
+            REDIS_PASSWORD: admin
+        volumes:
+            - ./tmp/redis:/data
+        ports:
+            - "8002:6379"
+        command: redis-server --appendonly yes
+        container_name: karte_redis
