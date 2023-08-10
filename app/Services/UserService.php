@@ -5,12 +5,14 @@ namespace App\Services;
 use App\Contracts\Repositories\UserRepositoryContract;
 use App\Contracts\Services\UserServiceContract;
 use App\Http\Resources\Client\Admin\User\IndexResource;
-use App\Repositories\UserRepository as Repository;
+use App\Services\Traits\DataCachingTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class UserService extends CoreService implements UserServiceContract
 {
+    use DataCachingTrait;
 
     public function __construct(
         private readonly UserRepositoryContract $repository,
@@ -21,11 +23,32 @@ class UserService extends CoreService implements UserServiceContract
 
     /**
      * @param int $quantity
+     * @param int $page
+     * @param string $path
      * @return AnonymousResourceCollection
      */
-    public function paginate(int $quantity): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function paginate(int $quantity, int $page, string $path): AnonymousResourceCollection
     {
-        return IndexResource::collection($this->repository->paginate($quantity));
+        $users = Cache::rememberForever("users:paginate:$page", function () use ($quantity, $page) {
+            return $this->getRepository()->paginate($quantity, $page);
+        });
+
+        if ($users->items() === []) {
+            abort(404);
+        }
+
+        $users = IndexResource::collection($users);
+        $users->setPath($path);
+        return $users;
+    }
+
+    /**
+     * @param int $id
+     * @return Model|null
+     */
+    public function findById(int $id): Model|null
+    {
+        return Cache::get("users:$id");
     }
 
     /**
@@ -34,7 +57,13 @@ class UserService extends CoreService implements UserServiceContract
      */
     public function store(array $data): void
     {
-        $this->repository->store($data);
+        $user = $this->getRepository()->store($data);
+        $users = $this->getRepository()->getAll();
+
+        Cache::put("users:$user->id", $user);
+        Cache::put("users:all", $users);
+
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'users');
     }
 
     /**
@@ -44,9 +73,16 @@ class UserService extends CoreService implements UserServiceContract
      */
     public function update(int $id, array $data): ?string
     {
-        $user = $this->repository->findByEmail($data['email']);
+        $user = $this->getRepository()->findByEmail($data['email']);
         if ($user === null or $user->id === $id) {
-            $this->repository->update($id, $data);
+            $this->getRepository()->update($id, $data);
+            $user = $this->getRepository()->findById($id);
+            $users = $this->getRepository()->getAll();
+
+            Cache::put("users:$id", $user);
+            Cache::put("users:all", $users);
+
+            $this->paginationCacheUpdateHandler($this->getRepository(), 'users');
             return null;
         }
         return 'email';
@@ -58,6 +94,20 @@ class UserService extends CoreService implements UserServiceContract
      */
     public function destroy(int $id): void
     {
-        $this->repository->destroy($id);
+        $this->getRepository()->destroy($id);
+        Cache::forget("users:$id");
+
+        $users = $this->getRepository()->getAll();
+        Cache::put("users:all", $users);
+
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'users');
+    }
+
+    /**
+     * @return UserRepositoryContract
+     */
+    public function getRepository(): UserRepositoryContract
+    {
+        return $this->repository;
     }
 }

@@ -9,9 +9,11 @@ interface ColorServiceContract
 
     /**
      * @param int $quantity
+     * @param int $page
+     * @param string $path
      * @return AnonymousResourceCollection
      */
-    public function paginate(int $quantity): \Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+    public function paginate(int $quantity, int $page, string $path): \Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
     /**
      * @param array $data

@@ -29,7 +29,9 @@ class TagController extends BaseController
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $quantity = 10;
-        $tags = $this->service->paginate($quantity);
+        $page = (int)request()->query('page', 1);
+        $path = request()->getPathInfo();
+        $tags = $this->service->paginate($quantity, $page, $path);
         return view('admin.tag.index', compact('tags'));
     }
 
@@ -44,11 +46,15 @@ class TagController extends BaseController
     }
 
     /**
-     * @param Tag $tag
+     * @param int $id
      * @return View|\Illuminate\Foundation\Application|Factory|Application
      */
-    public function show(Tag $tag): View|\Illuminate\Foundation\Application|Factory|Application
+    public function show(int $id): View|\Illuminate\Foundation\Application|Factory|Application
     {
+        $tag = $this->service->findById($id);
+        if ($tag === null) {
+            abort(404);
+        }
         return view('admin.tag.show', compact('tag'));
     }
 

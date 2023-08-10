@@ -5,10 +5,14 @@ namespace App\Services;
 use App\Contracts\Repositories\CategoryRepositoryContract;
 use App\Contracts\Services\CategoryServiceContract;
 use App\Http\Resources\Client\Admin\Category\IndexResource;
+use App\Services\Traits\DataCachingTrait;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryService extends CoreService implements CategoryServiceContract
 {
+    use DataCachingTrait;
 
     public function __construct(
         private readonly CategoryRepositoryContract $repository,
@@ -19,11 +23,32 @@ class CategoryService extends CoreService implements CategoryServiceContract
 
     /**
      * @param int $quantity
+     * @param int $page
+     * @param string $path
      * @return AnonymousResourceCollection
      */
-    public function paginate(int $quantity): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function paginate(int $quantity, int $page, string $path): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        return IndexResource::collection($this->repository->paginate($quantity));
+        $categories = Cache::rememberForever("categories:paginate:$page", function () use ($quantity, $page) {
+            return $this->getRepository()->paginate($quantity, $page);
+        });
+
+        if ($categories->items() === []) {
+            abort(404);
+        }
+
+        $categories = IndexResource::collection($categories);
+        $categories->setPath($path);
+        return $categories;
+    }
+
+    /**
+     * @param int $id
+     * @return Model|null
+     */
+    public function findById(int $id): Model|null
+    {
+        return Cache::get("categories:$id");
     }
 
     /**
@@ -33,7 +58,14 @@ class CategoryService extends CoreService implements CategoryServiceContract
     public function store(array $data): void
     {
         $data['title'] = ucfirst($data['title']);
-        $this->repository->store($data);
+        $category = $this->getRepository()->store($data);
+        $categories = $this->getRepository()->getAll();
+
+        Cache::put("categories:$category->id", $category);
+        Cache::put("categories:all", $categories);
+
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'categories');
+
     }
 
     /**
@@ -44,9 +76,16 @@ class CategoryService extends CoreService implements CategoryServiceContract
     public function update(int $id, array $data): ?string
     {
         $data['title'] = ucfirst($data['title']);
-        $category = $this->repository->findByTitle($data['title']);
+        $category = $this->getRepository()->findByTitle($data['title']);
         if ($category === null or $category->id === $id) {
-            $this->repository->update($id, $data);
+            $this->getRepository()->update($id, $data);
+
+            $category = $this->getRepository()->findById($id);
+            $categories = $this->getRepository()->getAll();
+
+            Cache::put("categories:$id", $category);
+            Cache::put("categories:all", $categories);
+            $this->paginationCacheUpdateHandler($this->getRepository(), 'categories');
             return null;
         }
         return 'title';
@@ -58,6 +97,20 @@ class CategoryService extends CoreService implements CategoryServiceContract
      */
     public function destroy(int $id): void
     {
-        $this->repository->destroy($id);
+        $this->getRepository()->destroy($id);
+        Cache::forget("categories:$id");
+
+        $categories = $this->getRepository()->getAll();
+        Cache::put("categories:all", $categories);
+
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'categories');
+    }
+
+    /**
+     * @return CategoryRepositoryContract
+     */
+    public function getRepository(): CategoryRepositoryContract
+    {
+        return $this->repository;
     }
 }
