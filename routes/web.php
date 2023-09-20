@@ -22,4 +22,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Client',], function () {
         Route::resource('/tags', 'TagController');
         Route::resource('/products', 'ProductController');
     });
+
+    Route::get('/{page}', 'MainController@index')->where('page', '.*');
 });

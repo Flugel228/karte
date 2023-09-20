@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
     protected $table = 'products';
 
@@ -45,5 +47,15 @@ class Product extends Model
     public function images(): BelongsToMany
     {
         return $this->belongsToMany(Image::class, 'image_products', 'product_id', 'image_id');
+    }
+
+    public function likedUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'product_user_likes', 'product_id', 'user_id');
+    }
+
+    public function productComments(): HasMany
+    {
+        return $this->hasMany(ProductUserComment::class, 'product_id', 'id');
     }
 }

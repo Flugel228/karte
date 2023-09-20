@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Contracts\Repositories\ProductRepositoryContract;
+use App\Http\Filters\ProductFilter;
 use App\Models\Product as Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -24,11 +25,14 @@ class ProductRepository extends CoreRepository implements ProductRepositoryContr
     /**
      * @param int $quantity
      * @param int $page
+     * @param ProductFilter $filter
      * @return LengthAwarePaginator
      */
-    public function paginate(int $quantity, int $page): LengthAwarePaginator
+    public function paginate(int $quantity, int $page, ProductFilter $filter): LengthAwarePaginator
     {
-        return $this->startConditions()->paginate($quantity, ['*'], 'page', $page);
+        return $this->startConditions()
+            ->filter($filter)
+            ->paginate($quantity, ['*'], 'page', $page);
     }
 
     /**
@@ -37,7 +41,8 @@ class ProductRepository extends CoreRepository implements ProductRepositoryContr
      */
     public function findById(int $id): Model|null
     {
-        return $this->startConditions()->find($id);
+        return $this->startConditions()
+            ->find($id);
     }
 
     /**
@@ -46,7 +51,9 @@ class ProductRepository extends CoreRepository implements ProductRepositoryContr
      */
     public function findByTitle(string $title): Model|null
     {
-        return $this->startConditions()->where('title', '=', $title)->first();
+        return $this->startConditions()
+            ->where('title', '=', $title)
+            ->first();
     }
 
     /**
@@ -55,7 +62,8 @@ class ProductRepository extends CoreRepository implements ProductRepositoryContr
      */
     public function store(array $data): Model
     {
-        return $this->startConditions()->create($data);
+        return $this->startConditions()
+            ->create($data);
     }
 
     /**
@@ -65,7 +73,9 @@ class ProductRepository extends CoreRepository implements ProductRepositoryContr
      */
     public function update(int $id, array $data): bool
     {
-        return $this->startConditions()->find($id)->update($data);
+        return $this->startConditions()
+            ->find($id)
+            ->update($data);
     }
 
     /**
@@ -74,7 +84,9 @@ class ProductRepository extends CoreRepository implements ProductRepositoryContr
      */
     public function destroy(int $id): void
     {
-        $this->startConditions()->find($id)->delete();
+        $this->startConditions()
+            ->find($id)
+            ->delete();
     }
 
     /**
@@ -82,7 +94,9 @@ class ProductRepository extends CoreRepository implements ProductRepositoryContr
      */
     public function count(): int
     {
-        return $this->startConditions()->all()->count();
+        return $this->startConditions()
+            ->all()
+            ->count();
     }
 
     public function getAll(): Collection
@@ -90,4 +104,19 @@ class ProductRepository extends CoreRepository implements ProductRepositoryContr
         return $this->startConditions()->all();
     }
 
+
+    public function getMinPrice(): float
+    {
+        return $this->startConditions()->min('price');
+    }
+
+    public function getMaxPrice(): float
+    {
+        return $this->startConditions()->max('price');
+    }
+
+    public function getRecentProducts(int $count = 5): Collection
+    {
+        return $this->startConditions()->latest('created_at')->take($count)->get();
+    }
 }

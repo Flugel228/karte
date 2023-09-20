@@ -4,6 +4,7 @@ namespace App\Contracts\Repositories;
 
 use App\Models\User as Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserRepositoryContract
@@ -55,4 +56,28 @@ interface UserRepositoryContract
      * @return int
      */
     public function count(): int;
+
+    /**
+     * @return array
+     */
+    public function getGenders(): array;
+
+    /**
+     * @param int $id
+     * @return Collection
+     */
+    public function getLikedProducts(int $id): Collection;
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function likeProduct(array $data): void;
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return void
+     */
+    public function commentProduct(int $id, array $data): void;
 }

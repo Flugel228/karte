@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+use App\Contracts\Repositories\ProductUserCommentRepositoryContract;
 use App\Contracts\Repositories\UserRepositoryContract;
 use App\Contracts\Services\UserServiceContract;
+use App\Http\Resources\API\User\ProductResource;
 use App\Http\Resources\Client\Admin\User\IndexResource;
+use App\Models\User;
 use App\Services\Traits\DataCachingTrait;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Cache;
@@ -14,8 +18,13 @@ class UserService extends CoreService implements UserServiceContract
 {
     use DataCachingTrait;
 
+    /**
+     * @param UserRepositoryContract $repository
+     * @param ProductUserCommentRepositoryContract $productUserCommentRepositoryContract
+     */
     public function __construct(
         private readonly UserRepositoryContract $repository,
+        private readonly ProductUserCommentRepositoryContract $productUserCommentRepositoryContract,
     )
     {
         parent::__construct();
@@ -63,7 +72,7 @@ class UserService extends CoreService implements UserServiceContract
         Cache::put("users:$user->id", $user);
         Cache::put("users:all", $users);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'users');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'users', 10);
     }
 
     /**
@@ -82,7 +91,7 @@ class UserService extends CoreService implements UserServiceContract
             Cache::put("users:$id", $user);
             Cache::put("users:all", $users);
 
-            $this->paginationCacheUpdateHandler($this->getRepository(), 'users');
+            $this->paginationCacheUpdateHandler($this->getRepository(), 'users', 10);
             return null;
         }
         return 'email';
@@ -100,7 +109,34 @@ class UserService extends CoreService implements UserServiceContract
         $users = $this->getRepository()->getAll();
         Cache::put("users:all", $users);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'users');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'users', 10);
+    }
+
+    /**
+     * @return array
+     */
+    public function getGenders(): array
+    {
+        return $this->getRepository()->getGenders();
+    }
+
+    public function getLikedProducts(): AnonymousResourceCollection
+    {
+        $id = auth()->user()->id;
+        $products = $this->getRepository()->getLikedProducts($id);
+        return ProductResource::collection($products);
+    }
+
+    public function likeProduct(array $data): void
+    {
+        $data['user_id'] = auth()->user()->id;
+        $this->getRepository()->likeProduct($data);
+    }
+
+    public function commentProduct(array $data): void
+    {
+        $data['user_id'] = auth()->user()->id;
+        $this->getProductUserCommentRepositoryContract()->store($data);
     }
 
     /**
@@ -109,5 +145,13 @@ class UserService extends CoreService implements UserServiceContract
     public function getRepository(): UserRepositoryContract
     {
         return $this->repository;
+    }
+
+    /**
+     * @return ProductUserCommentRepositoryContract
+     */
+    public function getProductUserCommentRepositoryContract(): ProductUserCommentRepositoryContract
+    {
+        return $this->productUserCommentRepositoryContract;
     }
 }
