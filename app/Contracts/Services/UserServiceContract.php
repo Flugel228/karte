@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Services;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -40,4 +41,26 @@ interface UserServiceContract
      * @return void
      */
     public function destroy(int $id): void;
+
+    /**
+     * @return array
+     */
+    public function getGenders(): array;
+
+    /**
+     * @return AnonymousResourceCollection
+     */
+    public function getLikedProducts(): AnonymousResourceCollection;
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function likeProduct(array $data): void;
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function commentProduct(array $data): void;
 }

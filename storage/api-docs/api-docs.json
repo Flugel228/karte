@@ -1,0 +1,1004 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documintation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/": {},
+        "/api/users/auth/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Получение JWT-токен, используя заданные учетные данные",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "email": {
+                                                "type": "string",
+                                                "example": "example@exapmle.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "Password1@#"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4NzYvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNjk0MjMzNDI5LCJleHAiOjE2OTQyMzcwMjksIm5iZiI6MTY5NDIzMzQyOSwianRpIjoid011VEtxeHZXOVlxQU5pUCIsInN1YiI6IjUxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.fT5hk6B0wgFKffQ29YWoOZ-gv45itznc0EzSJDbyuWU"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/auth/me": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Получить аунтефицированного пользователя",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "FirstName"
+                                        },
+                                        "last_name": {
+                                            "type": "string",
+                                            "example": "LastName"
+                                        },
+                                        "role": {
+                                            "type": "integer",
+                                            "example": "0"
+                                        },
+                                        "gender": {
+                                            "type": "integer",
+                                            "example": "0"
+                                        },
+                                        "address": {
+                                            "type": "string",
+                                            "example": "Some address"
+                                        },
+                                        "telephone": {
+                                            "type": "string",
+                                            "example": "+375259530534"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "example@example.com"
+                                        },
+                                        "email_verified_at": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2023-09-05T10:22:25.000000Z"
+                                                },
+                                                {
+                                                    "type": "nullable",
+                                                    "example": "null"
+                                                }
+                                            ]
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2023-09-05T10:22:25.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2023-09-05T10:22:25.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/auth/refresh": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Получить обновленный токен",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4NzYvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNjk0MjMzNDI5LCJleHAiOjE2OTQyMzcwMjksIm5iZiI6MTY5NDIzMzQyOSwianRpIjoid011VEtxeHZXOVlxQU5pUCIsInN1YiI6IjUxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.fT5hk6B0wgFKffQ29YWoOZ-gv45itznc0EzSJDbyuWU"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": "3600"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/auth/logout": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Выйти из системы(сделать токен не действительным)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/auth/wishlist": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Список понравившихся продуктов.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Some title"
+                                            },
+                                            "price": {
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": "50.25"
+                                            },
+                                            "image": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "path": {
+                                                        "type": "string",
+                                                        "example": "/tmp/b472bb4d6f8f0f642b25a0466a4a2895.png"
+                                                    },
+                                                    "url": {
+                                                        "type": "string",
+                                                        "example": "https://via.placeholder.com/255x310.png/001100?text=similique"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/auth/products/comments": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Сохранение комментария",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "product_id": {
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Some title"
+                                            },
+                                            "comment": {
+                                                "type": "string",
+                                                "example": "Some comment"
+                                            },
+                                            "rate": {
+                                                "type": "integer",
+                                                "example": "5"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/auth/products/likes": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Поставить/Сбросить лайк",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "product_id": {
+                                                "type": "integer",
+                                                "example": "1"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/shop/products": {
+            "post": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Пагинация продуктов",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "page": {
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "category_ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "color_ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "tag_ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "prices": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "float",
+                                                    "example": "157.64"
+                                                }
+                                            },
+                                            "title": {
+                                                "oneOf": [
+                                                    {
+                                                        "type": "string",
+                                                        "example": "Some title"
+                                                    },
+                                                    {
+                                                        "type": "nullable",
+                                                        "example": "null"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "13"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Some title"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Some description"
+                                                    },
+                                                    "price": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": "125.50"
+                                                    },
+                                                    "category": {
+                                                        "type": "string",
+                                                        "example": "Some category"
+                                                    },
+                                                    "images": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "path": {
+                                                                    "type": "string",
+                                                                    "example": "/tmp/cca6fc22cdb6a612f9219384e9cad9d1.png"
+                                                                },
+                                                                "url": {
+                                                                    "type": "string",
+                                                                    "example": "https://via.placeholder.com/255x310.png/009955?text=sapiente"
+                                                                },
+                                                                "pivot": {
+                                                                    "properties": {
+                                                                        "product_id": {
+                                                                            "type": "integer",
+                                                                            "example": "1"
+                                                                        },
+                                                                        "image_id": {
+                                                                            "type": "integer",
+                                                                            "example": "21"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "colors": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string",
+                                                                    "example": "Some title"
+                                                                },
+                                                                "code": {
+                                                                    "type": "string",
+                                                                    "example": "#ffffff"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8876/api/shop/products?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8876/api/shop/products?page=5"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8876/api/shop/products?page=1"
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8876/api/shop/products?page=3"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": "2"
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": "13"
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": "5"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "http://localhost:8876/api/shop/products?page=1"
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "&laquo; Previous"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": "false"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8876/api/shop/products"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": "12"
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": "24"
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": "51"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/shop/categories": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Список категорий",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Some title"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/shop/colors": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Список цветов",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Purple"
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "#4fce3f"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/shop/tags": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Список тегов",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Some title"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/shop/prices": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Минимальная и максимальная цены.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "min": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": "0"
+                                        },
+                                        "max": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": "100"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/shop/products/{product}": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Единичная запись продукта",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "ID продукта",
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Some title"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Some decription"
+                                                },
+                                                "price": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": "1608.03"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": "500"
+                                                },
+                                                "category": {
+                                                    "type": "string",
+                                                    "example": "Some category"
+                                                },
+                                                "images": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "path": {
+                                                                "type": "string",
+                                                                "example": "/tmp/b472bb4d6f8f0f642b25a0466a4a2895.png"
+                                                            },
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "https://via.placeholder.com/255x310.png/001100?text=similique"
+                                                            },
+                                                            "pivot": {
+                                                                "properties": {
+                                                                    "product_id": {
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "image_id": {
+                                                                        "type": "integer",
+                                                                        "example": "31"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "colors": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "MediumOrchid"
+                                                            },
+                                                            "code": {
+                                                                "type": "string",
+                                                                "example": "#eb71fa"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tags": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "Some title"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "likedUsers": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Регистрация пользователя",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "first_name": {
+                                                "type": "string",
+                                                "example": "FirstName"
+                                            },
+                                            "last_name": {
+                                                "type": "string",
+                                                "example": "LastName"
+                                            },
+                                            "gender": {
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "address": {
+                                                "type": "string",
+                                                "example": "Some address"
+                                            },
+                                            "telephone": {
+                                                "type": "string",
+                                                "example": "+37588003346"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "example@example.org"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "Password1@#"
+                                            },
+                                            "confirm_password": {
+                                                "type": "string",
+                                                "example": "Password1@#"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Пользователь создан."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/genders": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Список гендеров",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Мужчина"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

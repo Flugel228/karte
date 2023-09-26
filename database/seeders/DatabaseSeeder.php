@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory(50)->create();
-        Category::factory(50)->create();
-        $colors = Color::factory(50)->create();
-        $tags = Tag::factory(50)->create();
+        Category::factory(5)->create();
+        $colors = Color::factory(20)->create();
+        $tags = Tag::factory(15)->create();
         $images = Image::factory(150)->create();
         $products = Product::factory(50)->create();
 

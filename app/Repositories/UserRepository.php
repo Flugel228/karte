@@ -88,4 +88,50 @@ class UserRepository extends CoreRepository implements UserRepositoryContract, C
         return $this->startConditions()->all();
     }
 
+    public function getGenders(): array
+    {
+        return $this->startConditions()::getGenders();
+    }
+
+    public function getLikedProducts(int $id): Collection
+    {
+        return $this->startConditions()
+            ->where('id', '=', $id)
+            ->first()
+            ->likedProducts()
+            ->get();
+    }
+
+    public function likeProduct(array $data): void
+    {
+        $this->startConditions()
+            ->where('id', '=', $data['user_id'])
+            ->first()
+            ->likedProducts()
+            ->toggle($data['product_id']);
+    }
+
+    public function commentProduct(int $id, array $data): void
+    {
+        $this->startConditions()
+            ->find($id)
+            ->commentedProducts()
+            ->toggle($data);
+    }
+
+    public function toOrderProduct(array $data): void
+    {
+        $this->startConditions()
+            ->find($data['user_id'])
+            ->orderedProducts()
+            ->toggle($data['product_id']);
+    }
+
+    public function getOrderedProducts(int $id): Collection
+    {
+        return $this->startConditions()
+            ->find($id)
+            ->orderedProducts()
+            ->get();
+    }
 }

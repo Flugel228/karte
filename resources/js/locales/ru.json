@@ -1,0 +1,190 @@
+{
+    "app": {
+        "current": "РУССКИЙ",
+        "languageSelect": {
+            "en": "АНГЛИЙСКИЙ",
+            "ru": "РУССКИЙ"
+        },
+        "menubox": {
+            "megaMenu": {
+                "shop": "Магазин"
+            },
+            "mobileMenu": {
+                "close": "Закрыть меню",
+                "shop": "Магазин",
+                "login": "Вход",
+                "register": "Регистрация",
+                "user": "Пользователь",
+                "logout": "Выйти"
+            }
+        },
+        "cart": {
+            "yourCart": "Ваша Корзина",
+            "total": "Итог",
+            "buttons": {
+                "viewCart": "Посмотреть",
+                "checkout": "Оформить"
+            }
+        }
+    },
+    "shop": {
+        "breadcrumb": {
+            "from": "Главная",
+            "active": "Магазин"
+        },
+        "shopGridSidebar": {
+            "searchInput": {
+                "placeholders": {
+                    "title": "Название"
+                }
+            },
+            "selectCategories": {
+                "title": "Выбор категории"
+            },
+            "colorOption": {
+                "title": "Выбор цвета"
+            },
+            "filterByPrice": {
+                "title": "Фильтр по цене",
+                "price": "Цена",
+                "buttons": {
+                    "filter": "Фильтровать"
+                }
+            },
+            "tags": {
+                "title": "Теги"
+            }
+        },
+        "products": {
+            "shopGridPageTopInfo": {
+                "showing": "Показано",
+                "of": "из",
+                "results": "результатов"
+            },
+            "tabContent": {
+                "new": "Новинка",
+                "best": "Лучшее",
+                "buttons": {
+                    "addToCart": "Добавить в корзину",
+                    "addTo": "Добавить"
+                },
+                "flaticon": {
+                    "wishlist": "понравилось",
+                    "compare": "сравнение",
+                    "quickView": "быстрый просмотор"
+                }
+            }
+        }
+    },
+    "user": {
+        "breadcrumb": {
+            "from": "Главная",
+            "active": "Пользователь"
+        },
+        "accountPage": {
+            "menu": {
+                "buttons": {
+                    "orders": "Заказы",
+                    "logout": "Выйти"
+                }
+            }
+        },
+        "tabContent": {
+            "order": {
+                "image": "Изображение",
+                "product": "Товар",
+                "price": "Цена"
+            }
+        }
+    },
+    "login": {
+        "breadcrumb": {
+            "from": "Главная",
+            "active": "Вход"
+        },
+        "loginForm": {
+            "login": "Вход",
+            "dontHaveAnAccountYet": "У вас еще нет учетной записи?",
+            "register": "Зарегистрироваться",
+            "forgot": "Забыли пароль?",
+            "buttons": {
+                "login": "Войти"
+            },
+            "placeholders": {
+                "email": "Ваш Email",
+                "password": "Ваш пароль"
+            }
+
+        }
+    },
+    "register": {
+        "breadcrumb": {
+            "from": "Главная",
+            "active": "Регистрация"
+        },
+        "registerForm": {
+            "register": "Регистрация",
+            "alreadyHaveAnAccount": "Уже есть аккаунт?",
+            "login": "Войти",
+            "placeholders": {
+                "firstName": "Ваше имя",
+                "lastName": "Ваша фамилия",
+                "address": "Великобритания, Лондон, Бейкер-стрит 228",
+                "password": "Введите пароль",
+                "confirmPassword": "Подтвердите пароль"
+            },
+            "buttons": {
+                "register": "Зарегистрироваться"
+            }
+        }
+    },
+    "wishlist": {
+        "breadcrumb": {
+            "from": "Главная",
+            "active": "Понравилось"
+        },
+        "wishlist": {
+            "image": "Изображение",
+            "product": "Товар",
+            "price": "Цена",
+            "status": "Статус",
+            "add": "Добавить",
+            "delete": "Удалить",
+            "wishlistProduct": {
+                "status": {
+                    "inStock": "На складе",
+                    "absent": "Отсутствует"
+                },
+                "buttons": {
+                    "addToCart": "Добавить в корзину"
+                }
+            }
+        }
+    },
+    "cart": {
+        "breadcrumb": {
+            "from": "Главная",
+            "active": "Корзина"
+        },
+        "cartArea": {
+            "image": "Изображение",
+            "product": "Товар",
+            "price": "Цена",
+            "quantity": "Количество",
+            "subtotal": "Промежуточный Итог",
+            "buttons": {
+                "continueShopping": "Продолжить покупки",
+                "checkout": "Оформить"
+            },
+            "cartTotals": "Итоги Корзины",
+            "shipping": "Перевозки",
+            "checkout": {
+                "title": "Итоговый чек",
+                "subtotal": "Промежуточный итог",
+                "shipping": "Перевозки",
+                "totalPrice": "Итоговая цена"
+            }
+        }
+    }
+
+}

@@ -54,7 +54,7 @@ class ColorService extends CoreService implements ColorServiceContract
         Cache::put("colors:$color->id", $color);
         Cache::put("colors:all", $colors);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'colors');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'colors', 10);
     }
 
     /**
@@ -78,7 +78,7 @@ class ColorService extends CoreService implements ColorServiceContract
             Cache::put("colors:$id", $color);
             Cache::put("colors:all", $colors);
 
-            $this->paginationCacheUpdateHandler($this->getRepository(), 'colors');
+            $this->paginationCacheUpdateHandler($this->getRepository(), 'colors', 10);
             return null;
         } elseif ($categoryByTitle !== null and ($categoryByCode === null or $categoryByCode->id === $id)) {
             return 'title';
@@ -100,7 +100,7 @@ class ColorService extends CoreService implements ColorServiceContract
         $colors = $this->getRepository()->getAll();
         Cache::put("colors:all", $colors);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'colors');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'colors', 10);
     }
 
     /**

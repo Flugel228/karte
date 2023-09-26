@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Repositories;
 
+use App\Http\Filters\ProductFilter;
 use App\Models\Product as Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -16,9 +17,10 @@ interface ProductRepositoryContract
     /**
      * @param int $quantity
      * @param int $page
+     * @param ProductFilter $filter
      * @return LengthAwarePaginator
      */
-    public function paginate(int $quantity, int $page): LengthAwarePaginator;
+    public function paginate(int $quantity, int $page, ProductFilter $filter): LengthAwarePaginator;
 
     /**
      * @param int $id
@@ -54,4 +56,20 @@ interface ProductRepositoryContract
      * @return int
      */
     public function count(): int;
+
+    /**
+     * @return float
+     */
+    public function getMinPrice(): float;
+
+    /**
+     * @return float
+     */
+    public function getMaxPrice(): float;
+
+    /**
+     * @param int $count
+     * @return Collection
+     */
+    public function getRecentProducts(int $count = 5): Collection;
 }

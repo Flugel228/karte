@@ -64,7 +64,7 @@ class CategoryService extends CoreService implements CategoryServiceContract
         Cache::put("categories:$category->id", $category);
         Cache::put("categories:all", $categories);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'categories');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'categories', 10);
 
     }
 
@@ -85,7 +85,7 @@ class CategoryService extends CoreService implements CategoryServiceContract
 
             Cache::put("categories:$id", $category);
             Cache::put("categories:all", $categories);
-            $this->paginationCacheUpdateHandler($this->getRepository(), 'categories');
+            $this->paginationCacheUpdateHandler($this->getRepository(), 'categories', 10);
             return null;
         }
         return 'title';
@@ -103,7 +103,7 @@ class CategoryService extends CoreService implements CategoryServiceContract
         $categories = $this->getRepository()->getAll();
         Cache::put("categories:all", $categories);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'categories');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'categories', 10);
     }
 
     /**
