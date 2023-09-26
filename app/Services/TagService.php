@@ -64,7 +64,7 @@ class TagService extends CoreService implements TagServiceContract
         Cache::put("tags:$tag->id", $tag);
         Cache::put("tags:all", $tags);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'tags');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'tags', 10);
     }
 
     /**
@@ -84,7 +84,7 @@ class TagService extends CoreService implements TagServiceContract
             Cache::put("tags:$id", $tag);
             Cache::put("tags:all", $tags);
 
-            $this->paginationCacheUpdateHandler($this->getRepository(), 'tags');
+            $this->paginationCacheUpdateHandler($this->getRepository(), 'tags', 10);
             return null;
         }
         return 'title';
@@ -102,7 +102,7 @@ class TagService extends CoreService implements TagServiceContract
         $tags = $this->getRepository()->getAll();
         Cache::put("tags:all", $tags);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'tags');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'tags', 10);
     }
 
     /**

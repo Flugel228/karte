@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\Repositories\ImageRepositoryContract;
 use App\Contracts\Repositories\ProductRepositoryContract;
 use App\Contracts\Services\ProductServiceContract;
+use App\Http\Resources\API\Shop\ProductResource;
 use App\Http\Resources\Client\Admin\Product\IndexResource;
 use App\Services\Traits\DataCachingTrait;
 use App\Services\Traits\StorageTrait;
@@ -71,7 +72,8 @@ class ProductService extends CoreService implements ProductServiceContract
         Cache::put("products:$product->id", $product);
         Cache::put("products:all", $products);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'products');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'products', 10);
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'products:shop', 12);
     }
 
     /**
@@ -104,7 +106,8 @@ class ProductService extends CoreService implements ProductServiceContract
         Cache::put("products:$id", $product);
         Cache::put("products:all", $products);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'products');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'products', 10);
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'products:shop', 12);
     }
 
     /**
@@ -123,7 +126,8 @@ class ProductService extends CoreService implements ProductServiceContract
         $products = $this->getRepository()->getAll();
         Cache::put("products:all", $products);
 
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'products');
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'products', 10);
+        $this->paginationCacheUpdateHandler($this->getRepository(), 'products:shop', 12);
     }
 
     /**
@@ -165,4 +169,5 @@ class ProductService extends CoreService implements ProductServiceContract
     {
         return $this->imageRepository;
     }
+
 }
