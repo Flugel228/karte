@@ -4,8 +4,6 @@ import transformToTwoDecimalPlaces from "../../composables/transformToTwoDecimal
 import addToCart from "../../composables/addToCart";
 import {computed, ref} from "vue";
 import {ProductComment} from "../../types/views/shop-details";
-import {types} from "sass";
-import Number = types.Number;
 
 const props = defineProps<IProps>();
 

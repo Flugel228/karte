@@ -2,6 +2,9 @@
 import {useStore} from "vuex";
 import {computed, onMounted, reactive} from "vue";
 import {Tag} from "../../../types/store/modules/shop";
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n({useScope: 'global'});
 
 const store = useStore();
 
@@ -36,7 +39,7 @@ const toggleActive = (id: number): void => {
 
 <template>
     <div class="single-sidebar-box mt-30 wow fadeInUp pb-0 border-bottom-0  animated"
-         style="visibility: visible; animation-name: fadeInUp;"><h4>Теги </h4>
+         style="visibility: visible; animation-name: fadeInUp;"><h4>{{ $t('shop.shopGridSidebar.tags.title') }} </h4>
         <ul class="popular-tag">
             <li
                 v-for="(tag, id) in tags"

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import {IProps} from "../../types/components/wishlist/wishlist-product";
 import addToCart from "../../composables/addToCart";
+import {useI18n} from "vue-i18n";
 
+const {t} = useI18n({useScope: 'global'});
 const props = defineProps<IProps>();
 </script>
 
@@ -20,17 +22,17 @@ const props = defineProps<IProps>();
             <p
                 v-if="product.quantity > 0"
                 class="instock"
-            >На складе</p>
+            >{{ $t('wishlist.wishlist.wishlistProduct.status.inStock')}}</p>
             <p
                 v-else
                 class="absence"
-            >Отсутствует</p>
+            >{{ $t('wishlist.wishlist.wishlistProduct.status.absence')}}</p>
         </td>
         <td class="add-to-cart-btn">
             <a
                 @click.prevent="addToCart(product)"
                 class=" btn--primary style2 "
-            >Добавить в корзину</a>
+            >{{ $t('wishlist.wishlist.wishlistProduct.buttons.addToCart')}}</a>
         </td>
         <td>
             <div class="remove"> <i class="flaticon-cross"></i> </div>

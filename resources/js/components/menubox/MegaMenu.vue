@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n({useScope: 'global'});
 </script>
 
 <template>
@@ -26,7 +29,7 @@
                         </li>
                         <li>
                             <router-link :to="{name: 'shop'}">
-                                <span>Магазин </span>
+                                <span>{{ $t('app.menubox.megaMenu.shop')}} </span>
                             </router-link>
                         </li>
                         <li class="dropdown-list megamenu "><a href="#0"> <span>Features </span> <span

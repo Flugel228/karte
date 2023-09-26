@@ -7,10 +7,12 @@ use App\Contracts\Repositories\ColorRepositoryContract;
 use App\Contracts\Repositories\ImageRepositoryContract;
 use App\Contracts\Repositories\ProductRepositoryContract;
 use App\Contracts\Repositories\ProductUserCommentRepositoryContract;
+use App\Contracts\Repositories\ProductUserOrderRepositoryContract;
 use App\Contracts\Repositories\TagRepositoryContract;
 use App\Contracts\Repositories\UserRepositoryContract;
 use App\Contracts\Services\CategoryServiceContract;
 use App\Contracts\Services\ColorServiceContract;
+use App\Contracts\Services\OrderServiceContract;
 use App\Contracts\Services\ProductServiceContract;
 use App\Contracts\Services\ShopServiceContract;
 use App\Contracts\Services\TagServiceContract;
@@ -21,10 +23,12 @@ use App\Repositories\ColorRepository;
 use App\Repositories\ImageRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProductUserCommentRepository;
+use App\Repositories\ProductUserOrderRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\UserRepository;
 use App\Services\CategoryService;
 use App\Services\ColorService;
+use App\Services\OrderService;
 use App\Services\ProductService;
 use App\Services\ShopService;
 use App\Services\TagService;
@@ -51,6 +55,8 @@ class ContractServiceProvider extends ServiceProvider
         $this->app->bind(ProductServiceContract::class, ProductService::class);
         $this->app->bind(ShopServiceContract::class, ShopService::class);
         $this->app->bind(ProductUserCommentRepositoryContract::class, ProductUserCommentRepository::class);
+        $this->app->bind(ProductUserOrderRepositoryContract::class, ProductUserOrderRepository::class);
+        $this->app->bind(OrderServiceContract::class, OrderService::class);
     }
 
     /**

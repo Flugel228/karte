@@ -9,9 +9,13 @@ const props = defineProps<IProps>();
     <div class="products-three-single slick-slide slick-current slick-active" tabindex="0" style="width: 312px;"
          data-slick-index="4" aria-hidden="false">
         <div class="products-three-single-img img-bg">
-            <a href="shop-details-3.html" class="d-block" tabindex="0">
+            <router-link
+                :to="{name: 'shop.details', params: {id: product.id}}"
+                class="d-block"
+                tabindex="0"
+            >
                 <img :src="product.image.url" alt="">
-            </a>
+            </router-link>
             <div class="products-grid-one__badge-box"><span class="bg_base badge new ">New</span>
             </div>
             <a href="cart.html" class="addcart btn--primary style2" tabindex="0"> Add To Cart </a>

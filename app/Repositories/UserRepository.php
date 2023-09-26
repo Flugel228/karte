@@ -114,9 +114,24 @@ class UserRepository extends CoreRepository implements UserRepositoryContract, C
     public function commentProduct(int $id, array $data): void
     {
         $this->startConditions()
-            ->find($data['user_id'])
+            ->find($id)
             ->commentedProducts()
             ->toggle($data);
     }
 
+    public function toOrderProduct(array $data): void
+    {
+        $this->startConditions()
+            ->find($data['user_id'])
+            ->orderedProducts()
+            ->toggle($data['product_id']);
+    }
+
+    public function getOrderedProducts(int $id): Collection
+    {
+        return $this->startConditions()
+            ->find($id)
+            ->orderedProducts()
+            ->get();
+    }
 }

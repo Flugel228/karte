@@ -113,8 +113,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Product::class, 'product_user_likes', 'user_id', 'product_id');
     }
 
-    public function commentedProducts(): HasMany
+    public function commentedProducts(): BelongsToMany
     {
-        return $this->hasMany(ProductUserComment::class, 'user_id', 'id');
+        return $this->belongsToMany(Product::class, 'product_user_comments', 'user_id', 'product_id');
+    }
+
+    public function orderedProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'product_user_orders', 'user_id', 'product_id');
     }
 }

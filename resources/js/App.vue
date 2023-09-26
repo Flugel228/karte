@@ -4,16 +4,28 @@ import MainMenu from "./components/menubox/MainMenu.vue";
 import MobileMenu from "./components/menubox/MobileMenu.vue";
 import SidebarContent from "./components/SidebarContent.vue";
 import Cart from "./components/Cart.vue";
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {useStore} from "vuex";
+import {useI18n} from "vue-i18n";
+
+const { t, locale} = useI18n({useScope: "global"});
 
 const store = useStore();
 const user = computed(() => store.getters["GET_USER"]);
+const languageSelectIsActive = ref<boolean>(false);
 
 onMounted(async (): Promise<void> => {
     store.commit("SET_ACCESS_TOKEN");
     await store.dispatch("FETCH_USER");
 });
+
+const switchLanguageSelectIsActive = (): void => {
+    languageSelectIsActive.value = !languageSelectIsActive.value
+}
+const switchLanguage = (language: string) => {
+    locale.value = language
+    localStorage.setItem('lang', locale.value);
+}
 </script>
 
 <template>
@@ -45,32 +57,22 @@ onMounted(async (): Promise<void> => {
                                             class="flaticon-instagram"></i></a></li>
                                     </ul>
                                 </div>
-                                <a href="#0" class="international-shopping d-lg-block d-none "> FREE SHIPPING OVER
-                                    $200. INTERNATIONAL SHIPPING AVAILABLE. </a>
                                 <div class=" d-flex align-items-center ">
-                                    <div class="language currency"><select style="display: none;">
-                                        <option>USD</option>
-                                        <option value="1">INR</option>
-                                        <option value="2">BDT</option>
-                                    </select>
-                                        <div class="nice-select" tabindex="0"><span class="current">USD</span>
+                                    <div class="language">
+                                        <div
+                                            @click="switchLanguageSelectIsActive"
+                                            :class="['nice-select', {'open': languageSelectIsActive}]" tabindex="0"
+                                        >
+                                            <span class="current">{{ $t('app.current')}} </span>
                                             <ul class="list">
-                                                <li data-value="USD" class="option selected">USD</li>
-                                                <li data-value="1" class="option">INR</li>
-                                                <li data-value="2" class="option">BDT</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="language"><select style="display: none;">
-                                        <option>ENGLISH</option>
-                                        <option value="1">GERMAN</option>
-                                        <option value="4">FRENCH</option>
-                                    </select>
-                                        <div class="nice-select" tabindex="0"><span class="current">ENGLISH </span>
-                                            <ul class="list">
-                                                <li data-value="ENGLISH" class="option selected">ENGLISH</li>
-                                                <li data-value="1" class="option">GERMAN</li>
-                                                <li data-value="4" class="option">FRENCH</li>
+                                                <li
+                                                    @click="switchLanguage('en')"
+                                                    :class="['option', {'selected': locale === 'en'}]"
+                                                >{{ $t('app.languageSelect.en')}}</li>
+                                                <li
+                                                    @click="switchLanguage('ru')"
+                                                    :class="['option', {'selected': locale === 'ru'}]"
+                                                >{{ $t('app.languageSelect.ru')}}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -325,7 +327,11 @@ onMounted(async (): Promise<void> => {
                                 <li><a href="cart.html">Корзина</a></li>
                                 <li
                                     v-if="user"
-                                ><router-link :to="{name: 'users.user.wishlist', params: {id: user.id}}">Список понравившегося</router-link></li>
+                                >
+                                    <router-link :to="{name: 'users.user.wishlist', params: {id: user.id}}">Список
+                                        понравившегося
+                                    </router-link>
+                                </li>
                                 <li><a href="compare.html">Сравнивать покупки</a></li>
                             </ul>
                         </div>

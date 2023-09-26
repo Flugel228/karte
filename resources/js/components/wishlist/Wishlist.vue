@@ -4,6 +4,9 @@ import {WishlistProduct as Product, WishlistResponse} from "../../types/componen
 import api from "../../axios/api";
 import axios from "axios";
 import WishlistProduct from "./WishlistProduct.vue";
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n({useScope: 'global'});
 
 const products = ref<Product[]>();
 
@@ -36,12 +39,12 @@ const fetchProducts = async (): Promise<void> => {
                             <table class="wishlist-table">
                                 <thead class="wishlist-header">
                                 <tr>
-                                    <th>Изображение</th>
-                                    <th>Товар</th>
-                                    <th>Цена</th>
-                                    <th>Статус запасов</th>
-                                    <th>Количество</th>
-                                    <th>Удалить</th>
+                                    <th>{{ $t('wishlist.wishlist.image')}}</th>
+                                    <th>{{ $t('wishlist.wishlist.product')}}</th>
+                                    <th>{{ $t('wishlist.wishlist.price')}}</th>
+                                    <th>{{ $t('wishlist.wishlist.status')}}</th>
+                                    <th>{{ $t('wishlist.wishlist.add')}}</th>
+                                    <th>{{ $t('wishlist.wishlist.delete')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>

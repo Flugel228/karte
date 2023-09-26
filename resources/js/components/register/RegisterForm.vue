@@ -6,8 +6,10 @@ import {address, letters, requiredContainNumbers, telephone} from "../../types/v
 import useVuelidate from "@vuelidate/core";
 import Input from "../inputs/Input.vue";
 import Select from "../inputs/Select.vue";
-import CheckBox from "../inputs/CheckBox.vue";
 import axios from "axios";
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n({useScope: 'global'});
 
 const genders = ref<string[]>();
 
@@ -109,20 +111,22 @@ const submitForm = async (): Promise<void> => {
              style="visibility: visible; animation-name: fadeInUp;">
             <div class="login-register-form">
                 <div class="top-title text-center ">
-                    <h2>Регистрация</h2>
-                    <p>Уже есть аккаунт? <router-link :to="{name: 'users.login'}">Войти</router-link></p>
+                    <h2>{{ $t('register.registerForm.register')}}</h2>
+                    <p>{{ $t('register.registerForm.alreadyHaveAnAccount')}}
+                        <router-link :to="{name: 'users.login'}">{{ $t('register.registerForm.login')}}</router-link>
+                    </p>
                 </div>
                 <form class="common-form">
                     <Input
                         :errors="v$.first_name.$errors"
                         name="first_name"
-                        placeholder="Введите имя"
+                        :placeholder="$t('register.registerForm.placeholders.firstName')"
                         v-model:value="v$.first_name.$model"
                     />
                     <Input
                         :errors="v$.last_name.$errors"
                         name="last_name"
-                        placeholder="Введите фамилию"
+                        :placeholder="$t('register.registerForm.placeholders.lastName')"
                         v-model:value="v$.last_name.$model"
                     />
                     <Select
@@ -134,7 +138,7 @@ const submitForm = async (): Promise<void> => {
                     <Input
                         :errors="v$.address.$errors"
                         name="address"
-                        placeholder="Великобритания, Лондон, Бейкер-стрит 228"
+                        :placeholder="$t('register.registerForm.placeholders.address')"
                         v-model:value="v$.address.$model"
                     />
                     <Input
@@ -155,21 +159,21 @@ const submitForm = async (): Promise<void> => {
                         :errors="v$.password.$errors"
                         name="password"
                         type="password"
-                        placeholder="Введите пароль"
+                        :placeholder="$t('register.registerForm.placeholders.password')"
                         v-model:value="v$.password.$model"
                     />
                     <Input
                         :errors="v$.confirm_password.$errors"
                         name="confirm_password"
                         type="password"
-                        placeholder="Повторите пароль"
+                        :placeholder="$t('register.registerForm.placeholders.confirmPassword')"
                         v-model:value="v$.confirm_password.$model"
                     />
                     <button
                         @click.prevent="submitForm"
                         type="submit"
                         class="btn--primary style2"
-                    >Register</button>
+                    >{{ $t('register.registerForm.buttons.register') }} </button>
                 </form>
             </div>
         </div>

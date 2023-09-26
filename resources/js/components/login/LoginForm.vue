@@ -7,6 +7,9 @@ import axios from "axios";
 import Input from "../inputs/Input.vue";
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n({useScope: 'global'});
 
 const store = useStore();
 const router = useRouter();
@@ -58,35 +61,33 @@ const submitForm = async (): Promise<void> => {
                 <div class="col-xl-6 col-lg-8 col-md-9">
                     <div class="login-register-form">
                         <div class="top-title text-center ">
-                            <h2>Вход</h2>
-                            <p>У вас еще нет аккаунта? <router-link :to="{name: 'users.register'}">Зарегестрироваться</router-link></p>
+                            <h2>{{ $t('login.loginForm.login') }}</h2>
+                            <p>{{ $t('login.loginForm.dontHaveAnAccountYet') }} <router-link :to="{name: 'users.register'}">{{ $t('login.loginForm.register') }}</router-link></p>
                         </div>
                         <form class="common-form">
                             <Input
                                 :errors="v$.email.$errors"
                                 type="email"
                                 name="email"
-                                placeholder="Ваш Email"
+                                :placeholder="$t('login.loginForm.placeholders.email')"
                                 v-model:value="v$.email.$model"
                             />
                             <Input
                                 :errors="v$.password.$errors"
                                 type="password"
                                 name="password"
-                                placeholder="Ваш пароль"
+                                :placeholder="$t('login.loginForm.placeholders.password')"
                                 v-model:value="v$.password.$model"
                             />
                             <div class="checkk ">
-                                <div class="form-check p-0 m-0">
-                                    <input type="checkbox" id="remember">
-                                    <label class="p-0" for="remember">Запомнить меня</label>
-                                </div>
-                                <a href="#0" class="forgot"> Забыли пароль?</a>
+                                <a href="#0" class="forgot">{{ $t('login.loginForm.forgot') }}</a>
                             </div>
                             <button
                                 @click.prevent="submitForm"
                                 type="submit"
-                                class="btn--primary style2">Войти
+                                class="btn--primary style2"
+                            >
+                                {{ $t('login.loginForm.buttons.login') }}
                             </button>
                         </form>
                     </div>

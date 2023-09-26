@@ -17,7 +17,7 @@ class AuthController extends BaseController
     )
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'refresh']]);
     }
 
     /**

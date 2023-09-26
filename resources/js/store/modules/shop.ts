@@ -32,10 +32,7 @@ const state: State = {
     colors: null,
     tags: null,
     prices: null,
-    popupProduct: null,
-    popupProductQuantity: 1,
     slideBarFilterIsActive: false,
-    popupProductIsActive: false,
     selectedCategories: [],
     selectedColors: [],
     selectedTags: [],
@@ -53,10 +50,7 @@ const getters: GetterTree<State, IRoot> & Getters = {
     [GettersTypes.GET_COLORS]: (state: State): null | Color[] => state.colors,
     [GettersTypes.GET_TAGS]: (state: State): null | Tag[] => state.tags,
     [GettersTypes.GET_PRICES]: (state: State): null | Prices => state.prices,
-    [GettersTypes.GET_POPUP_PRODUCT]: (state: State): null | Product => state.popupProduct,
-    [GettersTypes.GET_POPUP_PRODUCT_QUANTITY]: (state: State): number => state.popupProductQuantity,
     [GettersTypes.GET_SLIDE_BAR_FILTER_IS_ACTIVE]: (state: State): boolean => state.slideBarFilterIsActive,
-    [GettersTypes.GET_POPUP_PRODUCT_IS_ACTIVE]: (state: State): boolean => state.popupProductIsActive,
     [GettersTypes.GET_SELECTED_CATEGORIES]: (state: State): number[] => state.selectedCategories,
     [GettersTypes.GET_SELECTED_COLORS]: (state: State): number[] => state.selectedColors,
     [GettersTypes.GET_SELECTED_TAGS]: (state: State): number[] => state.selectedTags,
@@ -88,17 +82,8 @@ const mutations: MutationTree<State> & Mutations = {
     [MutationsTypes.SET_PRICES]: (state: State, payload: Prices): void => {
         state.prices = payload;
     },
-    [MutationsTypes.SET_POPUP_PRODUCT]: (state: State, payload: Product): void => {
-        state.popupProduct = payload;
-    },
-    [MutationsTypes.SET_POPUP_PRODUCT_QUANTITY]: (state: State, payload: number): void => {
-        state.popupProductQuantity = payload;
-    },
     [MutationsTypes.SWITCH_SLIDE_BAR_FILTER_IS_ACTIVE]: (state: State): void => {
         state.slideBarFilterIsActive = !state.slideBarFilterIsActive;
-    },
-    [MutationsTypes.SWITCH_POPUP_PRODUCT_IS_ACTIVE]: (state: State): void => {
-        state.popupProductIsActive = !state.popupProductIsActive;
     },
     [MutationsTypes.PUSH_SELECTED_CATEGORY]: (state: State, payload: number): void => {
         state.selectedCategories.push(payload);
@@ -144,7 +129,6 @@ const actions: ActionTree<State, IRoot> & Actions = {
                 prices: getters.GET_SELECTED_PRICES,
                 title: getters.GET_TITLE,
             });
-            console.log(res.data);
             commit(MutationsTypes.SET_PRODUCTS, res.data.data);
             commit(MutationsTypes.SET_LINKS, res.data.links);
             commit(MutationsTypes.SET_META, res.data.meta);

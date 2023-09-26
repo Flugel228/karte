@@ -54,8 +54,13 @@ class Product extends Model
         return $this->belongsToMany(User::class, 'product_user_likes', 'product_id', 'user_id');
     }
 
-    public function productComments(): HasMany
+    public function commentedUsers(): BelongsToMany
     {
-        return $this->hasMany(ProductUserComment::class, 'product_id', 'id');
+        return $this->belongsToMany(User::class, 'product_user_comments', 'product_id', 'user_id');
+    }
+
+    public function usersOrdered(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'product_user_orders', 'product_id', 'user_id');
     }
 }

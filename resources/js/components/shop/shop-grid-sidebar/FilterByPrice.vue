@@ -4,8 +4,11 @@ import VueSlider from "vue-slider-component";
 import 'vue-slider-component/theme/default.css';
 import {useStore} from "vuex";
 import {Meta, Prices} from "../../../types/store/modules/shop";
+import {useI18n} from "vue-i18n";
 
 type Value = number | string
+
+const {t} = useI18n({useScope: 'global'});
 
 const store = useStore();
 
@@ -31,7 +34,7 @@ const filter = async (): Promise<void> => {
 
 <template>
     <div class="single-sidebar-box mt-30 wow fadeInUp  animated"
-         style="visibility: visible; animation-name: fadeInUp;"><h4>Фильтр по цене</h4>
+         style="visibility: visible; animation-name: fadeInUp;"><h4>{{ $t('shop.shopGridSidebar.filterByPrice.title') }}</h4>
 
         <div class="slider-box">
             <vue-slider v-if="prices"
@@ -41,7 +44,7 @@ const filter = async (): Promise<void> => {
                         :interval="0.01"
                         @change="onSliderChange"
             />
-            <div class="output-price"><label for="priceRange">Price: {{ `${value[0]} - ${value[1]}` }}</label> <input
+            <div class="output-price"><label for="priceRange">{{ $t('shop.shopGridSidebar.filterByPrice.price') }}: {{ `${value[0]} - ${value[1]}` }}</label> <input
                 type="text"
                 id="priceRange"
                 readonly=""></div>
@@ -49,7 +52,7 @@ const filter = async (): Promise<void> => {
                 class="filterbtn"
                 type="submit"
                 @click="filter"
-            > Filter
+            > {{ $t('shop.shopGridSidebar.filterByPrice.buttons.filter') }}
             </button>
         </div>
     </div>

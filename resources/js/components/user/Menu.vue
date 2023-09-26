@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import {useI18n} from "vue-i18n";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 
 const store = useStore();
 const router = useRouter();
+
+const {t} = useI18n({useScope: 'global'});
 
 const clickHandler = () => {
     localStorage.removeItem('access_token');
@@ -19,13 +22,9 @@ const clickHandler = () => {
                  aria-orientation="vertical">
                 <button class="nav-link" id="v-pills-orders-tab" data-bs-toggle="pill" data-bs-target="#v-pills-orders"
                         type="button" role="tab" aria-controls="v-pills-orders" aria-selected="false">
-                    <span> Заказы</span>
+                    <span> {{$t('user.accountPage.menu.buttons.orders')}}</span>
                 </button>
-                <button class="nav-link active" id="v-pills-settings-tab" data-bs-toggle="pill"
-                        data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings"
-                        aria-selected="true"><span>Настройки</span>
-                </button>
-                <button @click="clickHandler" class="nav-link"><span> Выйти </span></button>
+                <button @click="clickHandler" class="nav-link"><span> {{ $t('user.accountPage.menu.buttons.logout')}} </span></button>
             </div>
         </div>
     </div>

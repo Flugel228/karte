@@ -2,6 +2,9 @@
 import {useStore} from "vuex";
 import {computed, ref} from "vue";
 import {Meta} from "../../../types/store/modules/shop";
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n({useScope: 'global'});
 
 const store = useStore();
 
@@ -20,7 +23,7 @@ const queryFilter = async (): Promise<void> => {
         <div class="footer-input-box p-0">
             <input
                 type="text"
-                placeholder="Название..."
+                :placeholder="`${$t('shop.shopGridSidebar.searchInput.placeholders.title')}...`"
                 name="title"
                 v-model="query"
                 @keypress.enter.prevent="queryFilter"

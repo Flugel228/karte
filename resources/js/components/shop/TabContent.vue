@@ -9,6 +9,9 @@ import {Meta} from "../../types/store/modules/shop";
 import axios from "axios";
 import transformToTwoDecimalPlaces from "../../composables/transformToTwoDecimalPlaces";
 import addToCart from "../../composables/addToCart";
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n({useScope: 'global'});
 
 // connection to vuex store
 const store = useStore();
@@ -99,11 +102,12 @@ onMounted(async () => {
                                         >
                                     </router-link>
                                     <div class="products-grid-one__badge-box"><span
-                                        class="bg_base badge new ">New</span>
+                                        class="bg_base badge new ">{{ $t('shop.products.tabContent.new') }}</span>
                                     </div>
                                     <a @click.prevent="addToCart(product)" href="cart.html"
-                                       class="addcart btn--primary style2">
-                                        Add To Cart </a>
+                                       class="addcart btn--primary style2"
+                                    >{{ $t('shop.products.tabContent.buttons.addToCart') }}
+                                    </a>
                                     <div class="products-grid__usefull-links">
                                         <ul>
                                             <li v-if="user">
@@ -112,24 +116,35 @@ onMounted(async () => {
                                                     @click.prevent="likeClickHandler(product.id)"
                                                     class="selected"
                                                 >
-                                                    <i class="flaticon-heart"></i> <span>wishlist</span>
+                                                    <i class="flaticon-heart"></i>
+                                                    <span>
+                                                        {{ $t('shop.products.tabContent.flaticon.wishlist') }}
+                                                    </span>
                                                 </a>
                                                 <a
                                                     v-else
                                                     @click.prevent="likeClickHandler(product.id)"
                                                 >
-                                                    <i class="flaticon-heart"></i> <span>wishlist</span>
+                                                    <i class="flaticon-heart"></i>
+                                                    <span>
+                                                        {{ $t('shop.products.tabContent.flaticon.wishlist') }}
+                                                    </span>
                                                 </a>
                                             </li>
                                             <li v-else>
                                                 <a>
-                                                    <i class="flaticon-heart"></i> <span>wishlist</span>
+                                                    <i class="flaticon-heart"></i>
+                                                    <span>
+                                                        {{ $t('shop.products.tabContent.flaticon.wishlist') }}
+                                                    </span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="compare.html">
                                                     <i class="flaticon-left-and-right-arrows"></i>
-                                                    <span>compare</span>
+                                                    <span>
+                                                        {{ $t('shop.products.tabContent.flaticon.compare') }}
+                                                    </span>
                                                 </a>
                                             </li>
                                             <li><a :href="`#popup${id}`"
@@ -137,7 +152,9 @@ onMounted(async () => {
                                                    @click="openPopup(product)"
                                             > <i
                                                 class="flaticon-visibility"></i>
-                                                <span> quick view</span>
+                                                <span>
+                                                    {{ $t('shop.products.tabContent.flaticon.quickView') }}
+                                                </span>
                                             </a></li>
                                         </ul>
                                     </div>
@@ -213,57 +230,6 @@ onMounted(async () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="popup-right-content">
-                                                    <h3>Brown Office Shoe</h3>
-                                                    <div class="ratting"><i class="flaticon-star"></i> <i
-                                                        class="flaticon-star"></i> <i class="flaticon-star"></i>
-                                                        <i class="flaticon-star"></i> <i class="flaticon-star"></i>
-                                                        <span>(112)</span></div>
-                                                    <p class="text"> Hydrating Plumping Intense
-                                                        Shine Lip Colour
-                                                    </p>
-                                                    <div class="price">
-                                                        <h2> $42 USD
-                                                            <del> $65 USD</del>
-                                                        </h2>
-                                                        <h6> In stuck</h6>
-                                                    </div>
-                                                    <div class="color-varient"><a href="#0" class="color-name pink">
-                                                        <span>Pink</span> </a> <a href="#0" class="color-name red">
-                                                        <span>Red</span> </a>
-                                                        <a href="#0" class="color-name yellow"><span>Yellow</span>
-                                                        </a> <a href="#0" class="color-name blue">
-                                                            <span>Blue</span>
-                                                        </a> <a href="#0" class="color-name black">
-                                                            <span>Black</span> </a></div>
-                                                    <div class="add-product">
-                                                        <h6>Qty:</h6>
-                                                        <div class="button-group">
-                                                            <div class="qtySelector text-center">
-                                                                                    <span class="decreaseQty"><i
-                                                                                        class="flaticon-minus"></i>
-                                                                                    </span> <input type="number"
-                                                                                                   class="qtyValue"
-                                                                                                   value="1">
-                                                                <span class="increaseQty"> <i class="flaticon-plus"></i>
-                                                                                    </span></div>
-                                                            <button class="btn--primary "> Add to
-                                                                Cart
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="payment-method"><a href="#0"> <img
-                                                        src="assets/images/payment_method/method_1.png" alt=""> </a>
-                                                        <a href="#0"> <img
-                                                            src="assets/images/payment_method/method_2.png" alt=""> </a>
-                                                        <a href="#0"> <img
-                                                            src="assets/images/payment_method/method_3.png" alt=""> </a>
-                                                        <a href="#0"> <img
-                                                            src="assets/images/payment_method/method_4.png" alt=""> </a>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -277,7 +243,8 @@ onMounted(async () => {
                                                     id: product.id
                                                 }
                                             }"
-                                        > {{ product.title }} </router-link>
+                                        > {{ product.title }}
+                                        </router-link>
                                     </h5>
                                     <p>
                                         <del>${{ transformToTwoDecimalPlaces(product.price) }}</del>
@@ -317,7 +284,10 @@ onMounted(async () => {
                                             class="hover-img"
                                         >
                                     </router-link>
-                                    <div class="products-grid-one__badge-box"><span class="badge discount">Best</span>
+                                    <div class="products-grid-one__badge-box">
+                                        <span class="badge discount">
+                                            {{ $t('shop.products.tabContent.best') }}
+                                        </span>
                                     </div>
                                 </div>
                                 <div id="popupb" class="product-gird__quick-view-popup mfp-hide">
@@ -391,59 +361,6 @@ onMounted(async () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="popup-right-content">
-                                                    <h3>Round Small Table </h3>
-                                                    <div class="ratting"><i class="flaticon-star"></i> <i
-                                                        class="flaticon-star"></i> <i class="flaticon-star"></i> <i
-                                                        class="flaticon-star"></i> <i class="flaticon-star"></i>
-                                                        <span>(123)</span></div>
-                                                    <p class="text"> Wooden Tables to Brighten Your
-                                                        Dining Room </p>
-                                                    <div class="price">
-                                                        <h2> $50 USD
-                                                            <del> $105 USD</del>
-                                                        </h2>
-                                                        <h6> In stuck</h6>
-                                                    </div>
-                                                    <div class="color-varient"><a href="#0" class="color-name pink">
-                                                        <span>Pink</span> </a> <a href="#0" class="color-name red">
-                                                        <span>Red</span>
-                                                    </a> <a href="#0" class="color-name yellow"><span>Yellow</span>
-                                                    </a> <a href="#0" class="color-name blue">
-                                                        <span>Blue</span> </a> <a href="#0" class="color-name black">
-                                                        <span>Black</span> </a></div>
-                                                    <div class="add-product">
-                                                        <h6>Qty:</h6>
-                                                        <div class="button-group">
-                                                            <div class="qtySelector text-center">
-                                                                <span class="decreaseQty">
-                                                                    <i class="flaticon-minus"></i>
-                                                                </span>
-                                                                <input
-                                                                    type="number"
-                                                                    class="qtyValue"
-                                                                >
-                                                                <span class="increaseQty">
-                                                                    <i class="flaticon-plus"></i>
-                                                                </span>
-                                                            </div>
-                                                            <button
-                                                                @click.prevent="addToCart"
-                                                                class="btn--primary "
-                                                            > Add to Cart
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="payment-method"><a href="#0"> <img
-                                                        src="assets/images/payment_method/method_1.png" alt=""> </a> <a
-                                                        href="#0"> <img src="assets/images/payment_method/method_2.png"
-                                                                        alt=""> </a> <a href="#0"> <img
-                                                        src="assets/images/payment_method/method_3.png" alt=""> </a> <a
-                                                        href="#0"> <img src="assets/images/payment_method/method_4.png"
-                                                                        alt=""> </a></div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -457,7 +374,8 @@ onMounted(async () => {
                                                     id: product.id
                                                 }
                                             }"
-                                        >{{ product.title }}</router-link>
+                                        >{{ product.title }}
+                                        </router-link>
                                     </h5>
                                     <p>
                                         <del>${{ transformToTwoDecimalPlaces(product.price) }}</del>
@@ -468,13 +386,40 @@ onMounted(async () => {
                                         <div class="title">
                                             <h6><a
                                                 @click.prevent="addToCart(product)"
-                                            >Добавить в корзину</a></h6>
+                                            >
+                                                {{ $t('shop.products.tabContent.buttons.addToCart') }}
+                                            </a></h6>
                                         </div>
                                         <div class="icon">
                                             <ul>
-                                                <li><a href="#popupb" class="popup_link"><i
-                                                    class="flaticon-eye"></i></a></li>
-                                                <li><a href="wishlist.html"><i class="flaticon-heart"></i></a></li>
+                                                <li>
+                                                    <a
+                                                        @click.prevent="openPopup(product)"
+                                                        class="popup_link"
+                                                    >
+                                                        <i class="flaticon-eye"></i>
+                                                    </a>
+                                                </li>
+                                                <li v-if="user">
+                                                    <a
+                                                        v-if="likeHandler(product.likedUsers)"
+                                                        @click.prevent="likeClickHandler(product.id)"
+                                                        class="selected"
+                                                    >
+                                                        <i class="flaticon-heart"></i>
+                                                    </a>
+                                                    <a
+                                                        v-else
+                                                        @click.prevent="likeClickHandler(product.id)"
+                                                    >
+                                                        <i class="flaticon-heart"></i>
+                                                    </a>
+                                                </li>
+                                                <li v-else>
+                                                    <a href="wishlist.html">
+                                                        <i class="flaticon-heart"></i>
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -582,7 +527,8 @@ onMounted(async () => {
                                                 <button
                                                     @click.prevent="addToCart(popupProduct, quantity)"
                                                     class="btn--primary "
-                                                > Add to Cart
+                                                >
+                                                    {{ $t('shop.products.tabContent.buttons.addTo') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -608,7 +554,6 @@ onMounted(async () => {
                         </button>
                     </div>
                 </div>
-                <div class="mfp-preloader">Loading...</div>
             </div>
         </div>
     </template>
@@ -621,4 +566,7 @@ onMounted(async () => {
 .products-grid__usefull-links
     a:hover
         cursor: pointer
+
+.product-grid-two.list .product-grid-two__overlay-box .icon a.selected
+    background-color: var(--thm-base)
 </style>

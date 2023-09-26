@@ -2,6 +2,9 @@
 import {useStore} from "vuex";
 import {computed, onMounted} from "vue";
 import {Category} from "../../../types/views/shop";
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n({useScope: 'global'});
 
 const store = useStore();
 
@@ -28,7 +31,7 @@ const clickOnCategory = async (id: number): Promise<void> => {
 
 <template>
     <div class="single-sidebar-box mt-30 wow fadeInUp  animated"
-         style="visibility: visible; animation-name: fadeInUp;"><h4>Выбрать категории</h4>
+         style="visibility: visible; animation-name: fadeInUp;"><h4>{{ $t('shop.shopGridSidebar.selectCategories.title')}}</h4>
         <div class="checkbox-item">
             <form>
                 <div

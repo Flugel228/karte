@@ -2,7 +2,7 @@ import {Image} from "../../views/shop-details";
 
 export interface IProps {
     images: Image[]
-    itemsToShow?: number
+    autoplay: number
     wrapAround?: boolean
     width: string
     height: string

@@ -80,4 +80,16 @@ interface UserRepositoryContract
      * @return void
      */
     public function commentProduct(int $id, array $data): void;
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function toOrderProduct(array $data): void;
+
+    /**
+     * @param int $id
+     * @return Collection
+     */
+    public function getOrderedProducts(int $id): Collection;
 }

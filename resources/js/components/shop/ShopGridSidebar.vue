@@ -4,7 +4,6 @@ import ColorOption from "./shop-grid-sidebar/ColorOption.vue";
 import FilterByPrice from "./shop-grid-sidebar/FilterByPrice.vue";
 import Tags from "./shop-grid-sidebar/Tags.vue";
 import SearchInput from "./shop-grid-sidebar/SearchInput.vue";
-import {IEmit, IProps} from "../../types/components/shop/shop-grid-sidebar";
 import {computed} from "vue";
 import {useStore} from "vuex";
 

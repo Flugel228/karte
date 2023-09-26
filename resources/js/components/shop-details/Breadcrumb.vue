@@ -22,7 +22,7 @@
                             </li>
                             <li class="active">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Подробнее о магазине</font>
+                                    <font style="vertical-align: inherit;">Подробнее о продукте</font>
                                 </font>
                             </li>
                         </ul>

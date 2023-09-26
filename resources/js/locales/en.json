@@ -1,0 +1,188 @@
+{
+    "app": {
+        "current": "ENGLISH",
+        "languageSelect": {
+            "en": "ENGLISH",
+            "ru": "RUSSIAN"
+        },
+        "menubox": {
+            "megaMenu": {
+                "shop": "Shop"
+            },
+            "mobileMenu": {
+                "close": "Close Menu",
+                "shop": "Shop",
+                "login": "Login",
+                "register": "Register",
+                "user": "User",
+                "logout": "Log Out"
+            }
+        },
+        "cart": {
+            "yourCart": "Your Cart",
+            "total": "Total",
+            "buttons": {
+                "viewCart": "View Cart",
+                "checkout": "Checkout"
+            }
+        }
+    },
+    "shop": {
+        "breadcrumb": {
+            "from": "Home",
+            "active": "Shop"
+        },
+        "shopGridSidebar": {
+            "searchInput": {
+                "placeholders": {
+                    "title": "Title"
+                }
+            },
+            "selectCategories": {
+                "title": "Select categories"
+            },
+            "colorOption": {
+                "title": "Color options"
+            },
+            "filterByPrice": {
+                "title": "Filter by price",
+                "price": "Price",
+                "buttons": {
+                    "filter": "Filter"
+                }
+            },
+            "tags": {
+                "title": "Tags"
+            }
+        },
+        "products": {
+            "shopGridPageTopInfo": {
+                "showing": "Showing",
+                "of": "of",
+                "results": "Results"
+            },
+            "tabContent": {
+                "new": "New",
+                "best": "Best",
+                "buttons": {
+                    "addToCart": "Add To Cart",
+                    "addTo": "Add To Cart"
+                },
+                "flaticon": {
+                    "wishlist": "wishlist",
+                    "compare": "compare",
+                    "quickView": "quick view"
+                }
+            }
+        }
+    },
+    "user": {
+        "breadcrumb": {
+            "from": "Home",
+            "active": "User"
+        },
+        "accountPage": {
+            "menu": {
+                "buttons": {
+                    "orders": "Orders",
+                    "logout": "Log Out"
+                }
+            }
+        },
+        "tabContent": {
+            "order": {
+                "image": "Image",
+                "product": "Product",
+                "price": "Price"
+            }
+        }
+    },
+    "login": {
+        "breadcrumb": {
+            "from": "Home",
+            "active": "Login"
+        },
+        "loginForm": {
+            "login": "Login",
+            "dontHaveAnAccountYet": "Don't have an account yet?",
+            "register": "Register",
+            "forgot": "Forgot password?",
+            "buttons": {
+                "login": "Login"
+            },
+            "placeholders": {
+                "email": "Your Email",
+                "password": "Your password"
+            }
+        }
+    },
+    "register": {
+        "breadcrumb": {
+            "from": "Home",
+            "active": "Register"
+        },
+        "registerForm": {
+            "register": "Register",
+            "alreadyHaveAnAccount": "Already have an account?",
+            "login": "Login",
+            "placeholders": {
+                "firstName": "Your first name",
+                "lastName": "Your last name",
+                "address": "UK, London, Baker Street 228",
+                "password": "Enter password",
+                "confirmPassword": "Confirm password"
+            },
+            "buttons": {
+                "register": "Register"
+            }
+        }
+    },
+    "wishlist": {
+        "breadcrumb": {
+            "from": "Home",
+            "active": "Wishlist"
+        },
+        "wishlist": {
+            "image": "Image",
+            "product": "Product",
+            "price": "Price",
+            "status": "Status",
+            "add": "Add",
+            "delete": "Delete",
+            "wishlistProduct": {
+                "status": {
+                    "inStock": "In stock",
+                    "absent": "Absent"
+                },
+                "buttons": {
+                    "addToCart": "Add to cart"
+                }
+            }
+        }
+    },
+    "cart": {
+        "breadcrumb": {
+            "from": "Home",
+            "active": "Cart"
+        },
+        "cartArea": {
+            "image": "Image",
+            "product": "Product",
+            "price": "Price",
+            "quantity": "Quantity",
+            "subtotal": "Subtotal",
+            "buttons": {
+                "continueShopping": "Continue shopping",
+                "checkout": "Checkout"
+            },
+            "cartTotals": "Cart Totals",
+            "shipping": "Shipping",
+            "checkout": {
+                "title": "Check Out",
+                "subtotal": "Subtotal",
+                "shipping": "Shipping",
+                "totalPrice": "Total Price"
+            }
+        }
+    }
+}

@@ -1,25 +1,35 @@
 <script setup lang="ts">
 import Breadcrumb from "../../components/shop-details/Breadcrumb.vue";
 import Top from "../../components/shop-details/Top.vue";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {Product, ProductResponse, RecentProductResponse} from "../../types/views/shop-details";
 import axios from "axios";
 import ProductDescriptionTabStart from "../../components/shop-details/ProductDescriptionTabStart.vue";
 import RecentProduct from "../../components/shop-details/RecentProduct.vue"
 import RecentProductsSlider from "../../components/shop-details/RecentProductsSlider.vue";
+import {useRoute} from "vue-router";
 
 // refs
 const product = ref<Product>();
 const recentProducts = ref<RecentProduct[]>();
+const route = useRoute();
 
 //METHODS
 onMounted(async (): Promise<void> => {
-    const id: number | string = window.location.pathname.replace('/shop/', '')
-    await fetchProduct(id);
-    await fetchRecentProducts();
+    await fetchData();
 })
 
-const fetchProduct = async (id: number | string): Promise<void> => {
+watch(() => route.params, async (): Promise<void> => {
+    await fetchData();
+})
+
+const fetchData = async (): Promise<void> => {
+    const id: string = window.location.pathname.replace('/shop/', '');
+    await fetchProduct(id);
+    await fetchRecentProducts();
+}
+
+const fetchProduct = async (id: string): Promise<void> => {
     try {
         const res = await axios.get<ProductResponse>(`/api/shop/products/${id}`);
         product.value = res.data.data;
@@ -69,6 +79,7 @@ const fetchRecentProducts = async (): Promise<void> => {
         />
         <!-- productdrescription-tab End -->
         <!-- recent-products Start -->
+        <RecentProductsSlider :products="recentProducts"/>
         <!-- recent-products End -->
     </main>
 </template>

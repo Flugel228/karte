@@ -32,6 +32,10 @@ const decrementQuantity = (id: number): void => {
                 <a href="shop-details-1.html" class="thumb">
                     <img :src="product.image.url" alt="">
                 </a>
+            </div>
+        </td>
+        <td>
+            <div class="thumb-box">
                 <a href="shop-details-1.html" class="title">
                     <h5>
                         <font style="vertical-align: inherit;">

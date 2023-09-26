@@ -43,6 +43,10 @@ Route::group(['namespace' => 'App\Http\Controllers\API'], function () {
                 Route::group(['prefix' => '/comments'], function () {
                     Route::post('/', 'CommentController@store');
                 });
+                Route::group(['prefix' => '/orders'], function () {
+                    Route::get('/', 'OrderController@index');
+                    Route::post('/', 'OrderController@store');
+                });
             });
         });
     });
