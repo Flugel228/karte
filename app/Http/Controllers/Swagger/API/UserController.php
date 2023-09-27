@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Swagger\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
 /**
@@ -53,6 +52,30 @@ use OpenApi\Annotations as OA;
  *         )
  *     )
  * ),
+ *
+ * @OA\Post(
+ *     path="/api/users/auth/wishlist",
+ *     summary="Список понравившихся продуктов.",
+ *     tags={"User"},
+ *     security={{ "bearerAuth": {} }},
+ *
+ *     @OA\Response(
+ *         response="200",
+ *         description="OK",
+ *         @OA\JsonContent(type="array",
+ *                 @OA\Items(
+ *                     @OA\Property(property="id", type="integer", example="1"),
+ *                     @OA\Property(property="title", type="string", example="Some title"),
+ *                     @OA\Property(property="price", type="float", example="50.25"),
+ *                     @OA\Property(property="image", type="object",
+ *                         @OA\Property(property="id", type="integer", example="1"),
+ *                         @OA\Property(property="path", type="string", example="/tmp/b472bb4d6f8f0f642b25a0466a4a2895.png"),
+ *                         @OA\Property(property="url", type="string", example="https://via.placeholder.com/255x310.png/001100?text=similique"),
+ *                     ),
+ *                 )
+ *         )
+ *     )
+ * )
  */
 class UserController extends Controller
 {

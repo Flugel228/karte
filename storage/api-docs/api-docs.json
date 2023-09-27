@@ -215,66 +215,6 @@
                 ]
             }
         },
-        "/api/users/auth/wishlist": {
-            "post": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Список понравившихся продуктов.",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer",
-                                                "example": "1"
-                                            },
-                                            "title": {
-                                                "type": "string",
-                                                "example": "Some title"
-                                            },
-                                            "price": {
-                                                "type": "number",
-                                                "format": "float",
-                                                "example": "50.25"
-                                            },
-                                            "image": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": "1"
-                                                    },
-                                                    "path": {
-                                                        "type": "string",
-                                                        "example": "/tmp/b472bb4d6f8f0f642b25a0466a4a2895.png"
-                                                    },
-                                                    "url": {
-                                                        "type": "string",
-                                                        "example": "https://via.placeholder.com/255x310.png/001100?text=similique"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/users/auth/products/comments": {
             "post": {
                 "tags": [
@@ -340,6 +280,101 @@
                                             "product_id": {
                                                 "type": "integer",
                                                 "example": "1"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/auth/products/orders": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Список заказанных продуктов.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Some title"
+                                                    },
+                                                    "price": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": "50.25"
+                                                    },
+                                                    "image": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "https://via.placeholder.com/255x310.png/001100?text=similique"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Заказ продуктов.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "product_ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                }
                                             }
                                         },
                                         "type": "object"
@@ -890,6 +925,83 @@
                 }
             }
         },
+        "/api/shop/products/recent": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Возвращает самые новые 5 продуктов",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Some title"
+                                                    },
+                                                    "price": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": "100.50"
+                                                    },
+                                                    "category": {
+                                                        "type": "string",
+                                                        "example": "Some category"
+                                                    },
+                                                    "image": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": "1"
+                                                            },
+                                                            "path": {
+                                                                "type": "string",
+                                                                "example": "/path"
+                                                            },
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": "https://localhost/path"
+                                                            },
+                                                            "pivot": {
+                                                                "properties": {
+                                                                    "product_id": {
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "image_id": {
+                                                                        "type": "integer",
+                                                                        "example": "1"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/users/": {
             "post": {
                 "tags": [
@@ -990,6 +1102,66 @@
                         }
                     }
                 }
+            }
+        },
+        "/api/users/auth/wishlist": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Список понравившихся продуктов.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Some title"
+                                            },
+                                            "price": {
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": "50.25"
+                                            },
+                                            "image": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "path": {
+                                                        "type": "string",
+                                                        "example": "/tmp/b472bb4d6f8f0f642b25a0466a4a2895.png"
+                                                    },
+                                                    "url": {
+                                                        "type": "string",
+                                                        "example": "https://via.placeholder.com/255x310.png/001100?text=similique"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
