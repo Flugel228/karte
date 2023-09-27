@@ -7,10 +7,12 @@
         },
         "menubox": {
             "megaMenu": {
+                "home": "Home",
                 "shop": "Shop"
             },
             "mobileMenu": {
                 "close": "Close Menu",
+                "home": "Home",
                 "shop": "Shop",
                 "login": "Login",
                 "register": "Register",

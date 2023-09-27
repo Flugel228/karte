@@ -7,10 +7,12 @@
         },
         "menubox": {
             "megaMenu": {
+                "home": "Главная",
                 "shop": "Магазин"
             },
             "mobileMenu": {
                 "close": "Закрыть меню",
+                "home": "Главная",
                 "shop": "Магазин",
                 "login": "Вход",
                 "register": "Регистрация",
