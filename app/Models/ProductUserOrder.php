@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductUserOrder extends Model
 {
-    use HasFactory, Filterable;
+    use HasFactory;
 
     /**
      * @var string
