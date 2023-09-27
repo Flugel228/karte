@@ -18,8 +18,6 @@ export type RecentProduct = {
     price: number
     category: string
     image: RecentProductImage
-    likedUsers: LikedUser[]
-    productComments: ProductComment[]
 }
 
 export type Image = {

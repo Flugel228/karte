@@ -223,6 +223,36 @@ use OpenApi\Annotations as OA;
  *             ),
  *         )
  *     )
+ * ),
+ *
+ * @OA\Get(
+ *     path="/api/shop/products/recent",
+ *     summary="Возвращает самые новые 5 продуктов",
+ *     tags={"Shop"},
+ *
+ *     @OA\Response(
+ *         response="200",
+ *         description="OK",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="data", type="array",
+ *                 @OA\Items(
+ *                     @OA\Property(property="id", type="integer", example="1"),
+ *                     @OA\Property(property="title", type="string", example="Some title"),
+ *                     @OA\Property(property="price", type="float", example="100.50"),
+ *                     @OA\Property(property="category", type="string", example="Some category"),
+ *                     @OA\Property(property="image", type="object",
+ *                          @OA\Property(property="id", type="integer", example="1"),
+ *                          @OA\Property(property="path", type="string", example="/path"),
+ *                          @OA\Property(property="url", type="string", example="https://localhost/path"),
+ *                          @OA\Property(property="pivot", type="object",
+ *                              @OA\Property(property="product_id", type="integer", example="1"),
+ *                              @OA\Property(property="image_id", type="integer", example="1")
+ *                          ),
+ *                     ),
+ *                 )
+ *             )
+ *         )
+ *     )
  * )
  */
 class ShopController extends Controller

@@ -35,7 +35,7 @@ Route::group(['namespace' => 'App\Http\Controllers\API'], function () {
             Route::post('logout', 'AuthController@logout');
             Route::post('refresh', 'AuthController@refresh');
             Route::post('me', 'AuthController@me');
-            Route::post('wishlist', 'AuthController@wishlist');
+            Route::post('wishlist', 'UserController@wishlist');
             Route::group(['prefix' => '/products'], function () {
                 Route::group(['prefix' => '/likes'], function () {
                     Route::post('/', 'LikeController@store');

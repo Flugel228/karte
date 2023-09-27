@@ -19,9 +19,7 @@ class RecentProductResource extends JsonResource
             'title' => $this->title,
             'price' => $this->price,
             'category' => $this->category->title,
-            'image' => ImageResource::make($this->images[0]),
-            'likedUsers' => UserResource::collection($this->likedUsers),
-            'productComments' => CommentResource::collection($this->productComments),
+            'image' => ImageResource::make($this->images[0])
         ];
     }
 }
