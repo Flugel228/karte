@@ -21,11 +21,6 @@ class ProductUserOrderRepository extends CoreRepository implements ProductUserOr
         return Model::class;
     }
 
-    public function paginate(int $quantity, int $page, ProductUserOrderFilter $filter): LengthAwarePaginator
-    {
-        return $this->startConditions()->filter($filter)->paginate($quantity, ['*'], 'page', $page);
-    }
-
     /**
      * @param array $data
      * @return Model

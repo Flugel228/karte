@@ -83,7 +83,7 @@ class ShopService extends CoreService implements ShopServiceContract
 
     public function getRecentProducts(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $count = (int)$this->getRepository()->count();
+        $count = $this->getRepository()->count();
         $products = $count < 5 ? $this->getRepository()->getRecentProducts($count) : $this->getRepository()->getRecentProducts();
         return RecentProductResource::collection($products);
     }
