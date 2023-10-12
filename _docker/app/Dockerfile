@@ -26,4 +26,7 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
 RUN apt-get install -y nano
 
+# Install Xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 WORKDIR /var/www

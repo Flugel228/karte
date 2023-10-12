@@ -5,10 +5,11 @@ namespace App\Services;
 use App\Contracts\Repositories\ImageRepositoryContract;
 use App\Contracts\Repositories\ProductRepositoryContract;
 use App\Contracts\Services\ProductServiceContract;
-use App\Http\Resources\API\Shop\ProductResource;
+use App\Http\Filters\ProductFilter;
 use App\Http\Resources\Client\Admin\Product\IndexResource;
 use App\Services\Traits\DataCachingTrait;
 use App\Services\Traits\StorageTrait;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -31,11 +32,22 @@ class ProductService extends CoreService implements ProductServiceContract
      * @param int $page
      * @param string $path
      * @return AnonymousResourceCollection
+     * @throws BindingResolutionException
      */
     public function paginate(int $quantity, int $page, string $path): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $products = Cache::rememberForever("products:paginate:$page", function () use ($quantity, $page) {
-            return $this->getRepository()->paginate($quantity, $page);
+        $data = [
+            'categories' => [],
+            'colors' => [],
+            'tags' => [],
+            'prices' => [],
+            'title' => [],
+        ];
+
+        $filter = app()->make(ProductFilter::class,['queryParams' => array_filter($data)]);
+
+        $products = Cache::rememberForever("products:paginate:$page", function () use ($quantity, $page, $filter) {
+            return $this->getRepository()->paginate($quantity, $page, $filter);
         });
 
         if ($products->items() === []) {
