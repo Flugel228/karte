@@ -164,13 +164,12 @@ class CategoryRepositoryTest extends TestCase
             'title' => 'Some new title'
         ];
 
-        $boll = true;
 
-        $this->mock(self::CATEGORY_REPOSITORY_ABSTRACT, function (MockInterface $mock) use ($id, $data, $boll) {
+        $this->mock(self::CATEGORY_REPOSITORY_ABSTRACT, function (MockInterface $mock) use ($id, $data) {
             $mock->shouldReceive('update')
                 ->once()
                 ->with($id, $data)
-                ->andReturn($boll);
+                ->andReturnTrue();
         });
 
         $result = $this->app->make(self::CATEGORY_REPOSITORY_ABSTRACT)->update($id, $data);

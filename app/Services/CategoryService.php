@@ -33,10 +33,6 @@ class CategoryService extends CoreService implements CategoryServiceContract
             return $this->getRepository()->paginate($quantity, $page);
         });
 
-        if ($categories->items() === []) {
-            abort(404);
-        }
-
         $categories = IndexResource::collection($categories);
         $categories->setPath($path);
         return $categories;
