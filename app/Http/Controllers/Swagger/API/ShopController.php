@@ -220,6 +220,18 @@ use OpenApi\Annotations as OA;
  *                         @OA\Property(property="id", type="integer", example="1"),
  *                     )
  *                 ),
+ *                 @OA\Property(property="productComments", type="array",
+ *                     @OA\Items(
+ *                         @OA\Property(property="user", type="object",
+ *                             @OA\Property(property="first_name", type="string", example="Faimya"),
+ *                             @OA\Property(property="last_name", type="string", example="Emiliya"),
+ *                         ),
+ *                         @OA\Property(property="title", type="string", example="Some title"),
+ *                         @OA\Property(property="comment", type="string", example="Some comment"),
+ *                         @OA\Property(property="rate", type="integer", example="5"),
+ *                         @OA\Property(property="date", type="string", example="09 19,2023 • 17:48"),
+ *                     )
+ *                 )
  *             ),
  *         )
  *     )
