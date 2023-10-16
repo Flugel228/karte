@@ -912,6 +912,43 @@
                                                         },
                                                         "type": "object"
                                                     }
+                                                },
+                                                "productComments": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "user": {
+                                                                "properties": {
+                                                                    "first_name": {
+                                                                        "type": "string",
+                                                                        "example": "Faimya"
+                                                                    },
+                                                                    "last_name": {
+                                                                        "type": "string",
+                                                                        "example": "Emiliya"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "Some title"
+                                                            },
+                                                            "comment": {
+                                                                "type": "string",
+                                                                "example": "Some comment"
+                                                            },
+                                                            "rate": {
+                                                                "type": "integer",
+                                                                "example": "5"
+                                                            },
+                                                            "date": {
+                                                                "type": "string",
+                                                                "example": "09 19,2023 • 17:48"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
                                                 }
                                             },
                                             "type": "object"
