@@ -3,28 +3,26 @@
 namespace App\Services;
 
 use App\Contracts\Repositories\ProductUserCommentRepositoryContract;
-use App\Contracts\Repositories\UserRepositoryContract;
+use App\Contracts\Repositories\Proxy\ProductUserCommentRepositoryProxyContract;
+use App\Contracts\Repositories\Proxy\UserRepositoryProxyContract;
 use App\Contracts\Services\UserServiceContract;
 use App\Http\Resources\API\User\ProductResource;
 use App\Http\Resources\Client\Admin\User\IndexResource;
-use App\Models\User;
 use App\Services\Traits\DataCachingTrait;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Facades\Cache;
 
 class UserService extends CoreService implements UserServiceContract
 {
     use DataCachingTrait;
 
     /**
-     * @param UserRepositoryContract $repository
-     * @param ProductUserCommentRepositoryContract $productUserCommentRepositoryContract
+     * @param UserRepositoryProxyContract $repository
+     * @param ProductUserCommentRepositoryProxyContract $productUserCommentRepositoryContract
      */
     public function __construct(
-        private readonly UserRepositoryContract $repository,
-        private readonly ProductUserCommentRepositoryContract $productUserCommentRepositoryContract,
+        private readonly UserRepositoryProxyContract $repository,
+        private readonly ProductUserCommentRepositoryProxyContract $productUserCommentRepositoryContract,
     )
     {
         parent::__construct();
@@ -38,14 +36,7 @@ class UserService extends CoreService implements UserServiceContract
      */
     public function paginate(int $quantity, int $page, string $path): AnonymousResourceCollection
     {
-        $users = Cache::rememberForever("users:paginate:$page", function () use ($quantity, $page) {
-            return $this->getRepository()->paginate($quantity, $page);
-        });
-
-        if ($users->items() === []) {
-            abort(404);
-        }
-
+        $users = $this->getRepository()->paginate($quantity, $page);
         $users = IndexResource::collection($users);
         $users->setPath($path);
         return $users;
@@ -57,7 +48,7 @@ class UserService extends CoreService implements UserServiceContract
      */
     public function findById(int $id): Model|null
     {
-        return Cache::get("users:$id");
+        return $this->getRepository()->findById($id);
     }
 
     /**
@@ -66,13 +57,7 @@ class UserService extends CoreService implements UserServiceContract
      */
     public function store(array $data): void
     {
-        $user = $this->getRepository()->store($data);
-        $users = $this->getRepository()->getAll();
-
-        Cache::put("users:$user->id", $user);
-        Cache::put("users:all", $users);
-
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'users', 10);
+        $this->getRepository()->store($data);
     }
 
     /**
@@ -85,13 +70,6 @@ class UserService extends CoreService implements UserServiceContract
         $user = $this->getRepository()->findByEmail($data['email']);
         if ($user === null or $user->id === $id) {
             $this->getRepository()->update($id, $data);
-            $user = $this->getRepository()->findById($id);
-            $users = $this->getRepository()->getAll();
-
-            Cache::put("users:$id", $user);
-            Cache::put("users:all", $users);
-
-            $this->paginationCacheUpdateHandler($this->getRepository(), 'users', 10);
             return null;
         }
         return 'email';
@@ -104,12 +82,6 @@ class UserService extends CoreService implements UserServiceContract
     public function destroy(int $id): void
     {
         $this->getRepository()->destroy($id);
-        Cache::forget("users:$id");
-
-        $users = $this->getRepository()->getAll();
-        Cache::put("users:all", $users);
-
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'users', 10);
     }
 
     /**
@@ -140,17 +112,17 @@ class UserService extends CoreService implements UserServiceContract
     }
 
     /**
-     * @return UserRepositoryContract
+     * @return UserRepositoryProxyContract
      */
-    public function getRepository(): UserRepositoryContract
+    public function getRepository(): UserRepositoryProxyContract
     {
         return $this->repository;
     }
 
     /**
-     * @return ProductUserCommentRepositoryContract
+     * @return ProductUserCommentRepositoryProxyContract
      */
-    public function getProductUserCommentRepositoryContract(): ProductUserCommentRepositoryContract
+    public function getProductUserCommentRepositoryContract(): ProductUserCommentRepositoryProxyContract
     {
         return $this->productUserCommentRepositoryContract;
     }

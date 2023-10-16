@@ -17,12 +17,14 @@ return new class extends Migration
             $table->foreignId('user_id')
                 ->index()
                 ->nullable()
-                ->constrained('users');
+                ->constrained('users')
+                ->cascadeOnDelete();
 
             $table->foreignId('product_id')
                 ->index()
                 ->nullable()
-                ->constrained('products');
+                ->constrained('products')
+                ->cascadeOnDelete();
 
             $table->timestamps();
         });

@@ -74,7 +74,6 @@ class ColorController extends BaseController
     public function store(StoreRequest $request): \Illuminate\Http\RedirectResponse
     {
         $data = $request->validated();
-        dd($data);
         $this->service->store($data);
         return redirect()->route('colors.index');
     }

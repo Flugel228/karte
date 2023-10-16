@@ -1,43 +1,20 @@
 <?php
 
-namespace App\Contracts\Repositories;
+namespace App\Contracts\Repositories\Proxy;
 
-use App\Models\Color as Model;
+use App\Models\Image as Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface ColorRepositoryContract extends CountableRepository
+interface ImageRepositoryProxyContract
 {
-
-    /**
-     * @return Collection
-     */
     public function getAll(): Collection;
-
-    /**
-     * @param int $quantity
-     * @param int $page
-     * @return LengthAwarePaginator
-     */
-    public function paginate(int $quantity, int $page): LengthAwarePaginator;
 
     /**
      * @param int $id
      * @return Model|null
      */
     public function findById(int $id): Model|null;
-
-    /**
-     * @param string $title
-     * @return Model|null
-     */
-    public function findByTitle(string $title): Model|null;
-
-    /**
-     * @param string $code
-     * @return Model|null
-     */
-    public function findByCode(string $code): Model|null;
 
     /**
      * @param array $data

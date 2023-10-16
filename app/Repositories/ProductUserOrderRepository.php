@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Contracts\Repositories\ProductUserOrderRepositoryContract;
-use App\Http\Filters\ProductUserOrderFilter;
 use App\Models\ProductUserOrder as Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
