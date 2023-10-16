@@ -33,7 +33,7 @@ class UpdateRequest extends FormRequest
             'tag_ids' => 'array',
             'tag_ids.*' => 'integer|exists:tags,id',
             'images' => 'array',
-            'images.*' => 'image|dimensions:width=255,height=310',
+            'images.*' => 'image|dimensions:min_width=255,min_height=310',
         ];
     }
 }
