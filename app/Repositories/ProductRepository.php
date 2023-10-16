@@ -107,12 +107,12 @@ class ProductRepository extends CoreRepository implements ProductRepositoryContr
 
     public function getMinPrice(): float
     {
-        return $this->startConditions()->min('price');
+        return (float)$this->startConditions()->min('price');
     }
 
     public function getMaxPrice(): float
     {
-        return $this->startConditions()->max('price');
+        return (float)$this->startConditions()->max('price');
     }
 
     public function getRecentProducts(int $count = 5): Collection
