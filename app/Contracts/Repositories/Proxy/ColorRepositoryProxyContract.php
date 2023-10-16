@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Contracts\Repositories;
+namespace App\Contracts\Repositories\Proxy;
 
+use App\Contracts\Repositories\CountableRepository;
 use App\Models\Color as Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface ColorRepositoryContract extends CountableRepository
+interface ColorRepositoryProxyContract
 {
 
     /**

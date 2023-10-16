@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
-use App\Contracts\Repositories\ImageRepositoryContract;
-use App\Contracts\Repositories\ProductRepositoryContract;
+use App\Contracts\Repositories\Proxy\CategoryRepositoryProxyContract;
+use App\Contracts\Repositories\Proxy\ColorRepositoryProxyContract;
+use App\Contracts\Repositories\Proxy\ImageRepositoryProxyContract;
+use App\Contracts\Repositories\Proxy\ProductRepositoryProxyContract;
+use App\Contracts\Repositories\Proxy\TagRepositoryProxyContract;
 use App\Contracts\Services\ProductServiceContract;
 use App\Http\Filters\ProductFilter;
 use App\Http\Resources\Client\Admin\Product\IndexResource;
@@ -13,15 +16,17 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Facades\Cache;
 
 class ProductService extends CoreService implements ProductServiceContract
 {
     use StorageTrait, DataCachingTrait;
 
     public function __construct(
-        private readonly ProductRepositoryContract $repository,
-        private readonly ImageRepositoryContract $imageRepository,
+        private readonly ProductRepositoryProxyContract $repository,
+        private readonly ImageRepositoryProxyContract $imageRepository,
+        private readonly CategoryRepositoryProxyContract $categoryRepository,
+        private readonly ColorRepositoryProxyContract $colorRepository,
+        private readonly TagRepositoryProxyContract $tagRepository,
     )
     {
         parent::__construct();
@@ -46,14 +51,7 @@ class ProductService extends CoreService implements ProductServiceContract
 
         $filter = app()->make(ProductFilter::class,['queryParams' => array_filter($data)]);
 
-        $products = Cache::rememberForever("products:paginate:$page", function () use ($quantity, $page, $filter) {
-            return $this->getRepository()->paginate($quantity, $page, $filter);
-        });
-
-        if ($products->items() === []) {
-            abort(404);
-        }
-
+        $products = $this->getRepository()->paginate($quantity,$page, $filter);
         $products = IndexResource::collection($products);
         $products->setPath($path);
         return $products;
@@ -61,7 +59,7 @@ class ProductService extends CoreService implements ProductServiceContract
 
     public function findById(int $id): Model|null
     {
-        return Cache::get("products:$id");
+        return $this->getRepository()->findById($id);
     }
 
     /**
@@ -75,17 +73,7 @@ class ProductService extends CoreService implements ProductServiceContract
         $tags = $data['tag_ids'];
         $colors = $data['color_ids'];
         unset($data['images'], $data['tag_ids'], $data['color_ids']);
-        $product = $this->getRepository()->store($data);
-        $product->images()->attach($images);
-        $product->tags()->attach($tags);
-        $product->colors()->attach($colors);
-        $products = $this->getRepository()->getAll();
-
-        Cache::put("products:$product->id", $product);
-        Cache::put("products:all", $products);
-
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'products', 10);
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'products:shop', 12);
+        $this->getRepository()->store($data, $images, $tags, $colors);
     }
 
     /**
@@ -102,7 +90,6 @@ class ProductService extends CoreService implements ProductServiceContract
                 $this->destroyImage($image->id);
             }
             $this->storeImages($data['images']);
-
             $images = $data['images'];
             $product->images()->sync($images);
         }
@@ -112,14 +99,6 @@ class ProductService extends CoreService implements ProductServiceContract
         $product->tags()->sync($tags);
         $product->colors()->sync($colors);
         $this->getRepository()->update($id, $data);
-        $product = $this->getRepository()->findById($id);
-        $products = $this->getRepository()->getAll();
-
-        Cache::put("products:$id", $product);
-        Cache::put("products:all", $products);
-
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'products', 10);
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'products:shop', 12);
     }
 
     /**
@@ -133,13 +112,6 @@ class ProductService extends CoreService implements ProductServiceContract
             $this->destroyImage($image->id);
         }
         $this->getRepository()->destroy($id);
-        Cache::forget("products:$id");
-
-        $products = $this->getRepository()->getAll();
-        Cache::put("products:all", $products);
-
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'products', 10);
-        $this->paginationCacheUpdateHandler($this->getRepository(), 'products:shop', 12);
     }
 
     /**
@@ -147,7 +119,7 @@ class ProductService extends CoreService implements ProductServiceContract
      */
     public function getAllCategories(): Collection
     {
-        return Cache::get("categories:all");
+        return $this->getCategoryRepository()->getAll();
     }
 
     /**
@@ -155,7 +127,7 @@ class ProductService extends CoreService implements ProductServiceContract
      */
     public function getAllColors(): Collection
     {
-        return Cache::get("colors:all");
+        return $this->getColorRepository()->getAll();
     }
 
     /**
@@ -163,23 +135,47 @@ class ProductService extends CoreService implements ProductServiceContract
      */
     public function getAllTags(): Collection
     {
-        return Cache::get("tags:all");
+        return $this->getTagRepository()->getAll();
     }
 
     /**
-     * @return ProductRepositoryContract
+     * @return ProductRepositoryProxyContract
      */
-    public function getRepository(): ProductRepositoryContract
+    public function getRepository(): ProductRepositoryProxyContract
     {
         return $this->repository;
     }
 
     /**
-     * @return ImageRepositoryContract
+     * @return ImageRepositoryProxyContract
      */
-    public function getImageRepository(): ImageRepositoryContract
+    public function getImageRepository(): ImageRepositoryProxyContract
     {
         return $this->imageRepository;
+    }
+
+    /**
+     * @return CategoryRepositoryProxyContract
+     */
+    public function getCategoryRepository(): CategoryRepositoryProxyContract
+    {
+        return $this->categoryRepository;
+    }
+
+    /**
+     * @return ColorRepositoryProxyContract
+     */
+    public function getColorRepository(): ColorRepositoryProxyContract
+    {
+        return $this->colorRepository;
+    }
+
+    /**
+     * @return TagRepositoryProxyContract
+     */
+    public function getTagRepository(): TagRepositoryProxyContract
+    {
+        return $this->tagRepository;
     }
 
 }

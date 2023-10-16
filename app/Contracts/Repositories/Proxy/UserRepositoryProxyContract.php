@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Contracts\Repositories;
+namespace App\Contracts\Repositories\Proxy;
 
-use App\Models\Color as Model;
+use App\Models\User as Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface ColorRepositoryContract extends CountableRepository
+interface UserRepositoryProxyContract
 {
-
     /**
      * @return Collection
      */
@@ -28,16 +27,10 @@ interface ColorRepositoryContract extends CountableRepository
     public function findById(int $id): Model|null;
 
     /**
-     * @param string $title
+     * @param string $email
      * @return Model|null
      */
-    public function findByTitle(string $title): Model|null;
-
-    /**
-     * @param string $code
-     * @return Model|null
-     */
-    public function findByCode(string $code): Model|null;
+    public function findByEmail(string $email): Model|null;
 
     /**
      * @param array $data
@@ -57,4 +50,33 @@ interface ColorRepositoryContract extends CountableRepository
      * @return void
      */
     public function destroy(int $id): void;
+
+    /**
+     * @return array
+     */
+    public function getGenders(): array;
+
+    /**
+     * @param int $id
+     * @return Collection
+     */
+    public function getLikedProducts(int $id): Collection;
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function likeProduct(array $data): void;
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function toOrderProduct(array $data): void;
+
+    /**
+     * @param int $id
+     * @return Collection
+     */
+    public function getOrderedProducts(int $id): Collection;
 }

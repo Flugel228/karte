@@ -11,7 +11,7 @@ trait StorageTrait
     /**
      * Store image.
      *
-     * @param object $image
+     * @param array $data
      * @return void
      */
     public function storeImages(array &$data): void

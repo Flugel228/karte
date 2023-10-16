@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
-use App\Contracts\Repositories\ProductRepositoryContract;
+use App\Contracts\Repositories\Proxy\CategoryRepositoryProxyContract;
+use App\Contracts\Repositories\Proxy\ColorRepositoryProxyContract;
+use App\Contracts\Repositories\Proxy\ProductRepositoryProxyContract;
+use App\Contracts\Repositories\Proxy\TagRepositoryProxyContract;
 use App\Contracts\Services\ShopServiceContract;
 use App\Http\Filters\ProductFilter;
 use App\Http\Resources\API\Shop\CategoryResource;
@@ -17,7 +20,10 @@ use Illuminate\Support\Facades\Cache;
 class ShopService extends CoreService implements ShopServiceContract
 {
     public function __construct(
-        private readonly ProductRepositoryContract $repository
+        private readonly ProductRepositoryProxyContract $repository,
+        private readonly CategoryRepositoryProxyContract $categoryRepository,
+        private readonly ColorRepositoryProxyContract $colorRepository,
+        private readonly TagRepositoryProxyContract $tagRepository,
     )
     {
         parent::__construct();
@@ -37,30 +43,25 @@ class ShopService extends CoreService implements ShopServiceContract
         sort($data['colors']);
         sort($data['tags']);
         $filter = app()->make(ProductFilter::class,['queryParams' => array_filter($data)]);
-        $filterKey = md5(serialize($data));
-        $products = Cache::rememberForever("products:shop:filter_key:$filterKey:page:$page", function () use ($quantity, $page, $filter) {
-            return $this->getRepository()->paginate($quantity, $page, $filter);
-        });
-
-
+        $products = $this->getRepository()->paginate($quantity, $page, $filter, true);
         return ProductResource::collection($products);
     }
 
     public function getCategories(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $categories = Cache::get('categories:all');
+        $categories = $this->getCategoryRepository()->getAll();
         return CategoryResource::collection($categories);
     }
 
     public function getColors(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $categories = Cache::get('colors:all');
+        $categories = $this->getColorRepository()->getAll();
         return ColorResource::collection($categories);
     }
 
     public function getTags(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $categories = Cache::get('tags:all');
+        $categories = $this->getTagRepository()->getAll();
         return TagResource::collection($categories);
     }
 
@@ -83,16 +84,39 @@ class ShopService extends CoreService implements ShopServiceContract
 
     public function getRecentProducts(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $count = $this->getRepository()->count();
-        $products = $count < 5 ? $this->getRepository()->getRecentProducts($count) : $this->getRepository()->getRecentProducts();
+       $products = $this->getRepository()->getRecentProducts();
         return RecentProductResource::collection($products);
     }
 
     /**
-     * @return ProductRepositoryContract
+     * @return ProductRepositoryProxyContract
      */
-    public function getRepository(): ProductRepositoryContract
+    public function getRepository(): ProductRepositoryProxyContract
     {
         return $this->repository;
+    }
+
+    /**
+     * @return CategoryRepositoryProxyContract
+     */
+    public function getCategoryRepository(): CategoryRepositoryProxyContract
+    {
+        return $this->categoryRepository;
+    }
+
+    /**
+     * @return ColorRepositoryProxyContract
+     */
+    public function getColorRepository(): ColorRepositoryProxyContract
+    {
+        return $this->colorRepository;
+    }
+
+    /**
+     * @return TagRepositoryProxyContract
+     */
+    public function getTagRepository(): TagRepositoryProxyContract
+    {
+        return $this->tagRepository;
     }
 }

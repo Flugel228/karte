@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Services;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 interface ColorServiceContract
@@ -14,6 +15,12 @@ interface ColorServiceContract
      * @return AnonymousResourceCollection
      */
     public function paginate(int $quantity, int $page, string $path): \Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
+    /**
+     * @param int $id
+     * @return Model|null
+     */
+    public function findById(int $id): Model|null;
 
     /**
      * @param array $data

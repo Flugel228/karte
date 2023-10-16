@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Contracts\Repositories;
+namespace App\Contracts\Repositories\Proxy;
 
-use App\Models\Color as Model;
+use App\Models\Category as Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface ColorRepositoryContract extends CountableRepository
+interface CategoryRepositoryProxyContract
 {
 
     /**
@@ -32,12 +32,6 @@ interface ColorRepositoryContract extends CountableRepository
      * @return Model|null
      */
     public function findByTitle(string $title): Model|null;
-
-    /**
-     * @param string $code
-     * @return Model|null
-     */
-    public function findByCode(string $code): Model|null;
 
     /**
      * @param array $data
