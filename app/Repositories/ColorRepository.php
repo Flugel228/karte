@@ -13,7 +13,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  *
  * @package App\Repositories
  */
-class ColorRepository extends CoreRepository implements ColorRepositoryContract, CountableRepository
+class ColorRepository extends CoreRepository implements ColorRepositoryContract
 {
 
     protected function getModelClass(): string

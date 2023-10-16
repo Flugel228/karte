@@ -6,7 +6,7 @@ use App\Models\Category as Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface CategoryRepositoryContract
+interface CategoryRepositoryContract extends  CountableRepository
 {
 
     /**

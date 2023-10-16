@@ -13,7 +13,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  *
  * @package App\Repositories
  */
-class UserRepository extends CoreRepository implements UserRepositoryContract, CountableRepository
+class UserRepository extends CoreRepository implements UserRepositoryContract
 {
 
     protected function getModelClass(): string

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface UserRepositoryContract
+interface UserRepositoryContract extends CountableRepository
 {
     /**
      * @return Collection

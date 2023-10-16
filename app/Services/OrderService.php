@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Contracts\Repositories\ProductUserOrderRepositoryContract;
-use App\Contracts\Repositories\UserRepositoryContract;
+use App\Contracts\Repositories\Proxy\ProductUserOrderRepositoryProxyContract;
+use App\Contracts\Repositories\Proxy\UserRepositoryProxyContract;
 use App\Contracts\Services\OrderServiceContract;
 use App\Http\Resources\API\Order\IndexResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -11,8 +11,8 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class OrderService extends CoreService implements OrderServiceContract
 {
     public function __construct(
-        private readonly ProductUserOrderRepositoryContract $repository,
-        private readonly UserRepositoryContract $userRepository
+        private readonly ProductUserOrderRepositoryProxyContract $repository,
+        private readonly UserRepositoryProxyContract $userRepository
     )
     {
         parent::__construct();
@@ -43,17 +43,17 @@ class OrderService extends CoreService implements OrderServiceContract
     }
 
     /**
-     * @return ProductUserOrderRepositoryContract
+     * @return ProductUserOrderRepositoryProxyContract
      */
-    public function getRepository(): ProductUserOrderRepositoryContract
+    public function getRepository(): ProductUserOrderRepositoryProxyContract
     {
         return $this->repository;
     }
 
     /**
-     * @return UserRepositoryContract
+     * @return UserRepositoryProxyContract
      */
-    public function getUserRepository(): UserRepositoryContract
+    public function getUserRepository(): UserRepositoryProxyContract
     {
         return $this->userRepository;
     }
