@@ -32,6 +32,7 @@ This project is website shop that was created on the Laravel and Vue 3
 - <b> A Strategy</b> -  is a behavioral design pattern for modifying algorithms, encapsulating each one, and making them interchangeable. This allows you to choose how to define the appropriate class. The Strategy pattern allows you to change the selected algorithm regardless of the client objects that use it.<br>
 The diagram below shows an example relationships between the patterns and controllers for better understanding.<br>
 <img src="./doc/images/diagram.svg" alt="Scheme of the Controller connect with design patterns">
+
 ### Frontend
 - <b>axios</b>: This directory contains everything related to working with Axios, including API files. Here you can have separation of functions for interaction with the backend, as well as authorization using JWT tokens.<br>
 - <b>components</b>: This directory contains reusable Vue components that can be used in different parts of your application. This may include buttons, forms, cards, and other interface elements.<br>
