@@ -30,6 +30,7 @@ This project is website shop that was created on the Laravel and Vue 3
 - <b> A Repository</b> - is a design pattern that encapsulates everything related to a data storage method. Goal: Separating business logic from the implementation details of the data access layer.<br>
 - <b> A Proxy</b> - is a structural design pattern that provides an object that controls access to another object by intercepting all calls (performs the function of a container).<br>
 - <b> A Strategy</b> -  is a behavioral design pattern for modifying algorithms, encapsulating each one, and making them interchangeable. This allows you to choose how to define the appropriate class. The Strategy pattern allows you to change the selected algorithm regardless of the client objects that use it.<br>
+
 The diagram below shows an example relationships between the patterns and controllers for better understanding.<br>
 <img src="./doc/images/diagram.svg" alt="Scheme of the Controller connect with design patterns">
 
